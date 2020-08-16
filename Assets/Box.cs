@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class Box : MonoBehaviour
     [SerializeField] private Transform spriteSW;
     [SerializeField] private Transform spriteS;
     [SerializeField] private Transform spriteSE;
+    [SerializeField] private Transform spriteCenter;
 
     [SerializeField] private int top;
     [SerializeField] private int bottom;
@@ -26,8 +28,20 @@ public class Box : MonoBehaviour
 
     }
 
+
+    private void OnValidate()
+    {
+        UpdateBox();
+    }
+
     // Update is called once per frame
     void Update()
+    {
+        UpdateBox();
+    }
+
+
+    private void UpdateBox()
     {
         spriteNW.position = new Vector3(left, top, zLayer);
         spriteN.position = new Vector3(right + (left - right)*0.5f, top, zLayer);
