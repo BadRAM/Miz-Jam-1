@@ -121,6 +121,10 @@ public class Dither : MonoBehaviour
         if (x > 0 && y < height - 1)
             pixel_error[x - 1 + (y + 1) * width] += 3 / 16 * error_distribute;
 
+        GameObject spriteObject = Instantiate(spritePrefab, transform);
+        spriteObject.transform.localPosition = Vector3.right * x + Vector3.down * y;
+        spriteObject.GetComponent<SpriteRenderer>().sprite = Tiles[tile_number].sprite;
+        
         x++;
         if (x >= width)
         {
@@ -133,10 +137,6 @@ public class Dither : MonoBehaviour
                 _dithering = false;
             }
         }
-
-        GameObject spriteObject = Instantiate(spritePrefab, transform);
-        spriteObject.transform.localPosition = Vector3.right * x + Vector3.down * y;
-        spriteObject.GetComponent<SpriteRenderer>().sprite = Tiles[tile_number].sprite;
     }
     
     public static int BinarySearch(CollageTile[] a, float item)
