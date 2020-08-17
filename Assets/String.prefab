@@ -139,5 +139,7 @@ MonoBehaviour:
     sprite: {fileID: 3292227105300695302, guid: 398c9740794d2244e889bdb10761dc15, type: 3}
   - character: 36
     sprite: {fileID: -932655143141671623, guid: 398c9740794d2244e889bdb10761dc15, type: 3}
+  - character: 47
+    sprite: {fileID: 3223945150233868296, guid: e9178df2a2bf3824c878d34450bfe375, type: 3}
   spritePrefab: {fileID: 2283200622640813097, guid: 4d80789592e03ed42b10db56a66216ca, type: 3}
   charWidth: 1
