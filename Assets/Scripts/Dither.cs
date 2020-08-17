@@ -12,6 +12,7 @@ public class Dither : MonoBehaviour
     [SerializeField] private int width;
     [SerializeField] private int height;
     [SerializeField] private float minRenderInterval;
+    [SerializeField] private int maxRendersPerFrame;
     [SerializeField] private List<CollageTile> Tiles;
     [SerializeField] private GameObject spritePrefab;
     private int x=0;
@@ -68,10 +69,13 @@ public class Dither : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_dithering && Time.time - _lastRender > minRenderInterval)
+        int renderCount = 0;
+        while (_dithering && renderCount * Time.deltaTime < minRenderInterval && renderCount < maxRendersPerFrame)
         {
             dither_iterate();
+            renderCount++;
         }
+        Debug.Log(renderCount);
     }
 
     int threshold(float pixel_value)
@@ -137,6 +141,8 @@ public class Dither : MonoBehaviour
                 _dithering = false;
             }
         }
+
+        _lastRender = Time.time;
     }
     
     public static int BinarySearch(CollageTile[] a, float item)

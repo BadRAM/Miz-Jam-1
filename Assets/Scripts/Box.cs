@@ -74,6 +74,7 @@ public class Box : MonoBehaviour
         spriteW.GetComponent<SpriteRenderer>().enabled = visible;
         spriteSW.GetComponent<SpriteRenderer>().enabled = visible;
         spriteSE.GetComponent<SpriteRenderer>().enabled = visible;
+        spriteS.GetComponent<SpriteRenderer>().enabled = visible;
         spriteCenter.GetComponent<SpriteRenderer>().enabled = visible;
 
     }

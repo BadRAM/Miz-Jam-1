@@ -16,13 +16,14 @@ public class EnhanceBox : MonoBehaviour
     private bool _active;
     private Box _box;
     private Camera _camera;
+    private Dither _dither;
     
     // Start is called before the first frame update
     void Start()
     {
         _box = GetComponent<Box>();
         _camera = Camera.main;
-        _active = true;
+        _box.SetVisible(false);
     }
 
     // Update is called once per frame
