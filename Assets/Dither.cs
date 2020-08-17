@@ -5,40 +5,13 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-[Serializable]
-public struct CollageTile : IComparable<CollageTile>
-{
-    public float brightness;
-    public Sprite sprite;
-
-    public CollageTile(float brightness, Sprite sprite)
-    {
-        this.brightness = brightness;
-        this.sprite = sprite;
-    }
-
-    public int CompareTo(CollageTile other)
-    {
-        return brightness.CompareTo(other.brightness);
-    }
-    
-    public int CompareTo(float other)
-    {
-        return brightness.CompareTo(other);
-    }
-
-    int IComparable<CollageTile>.CompareTo(CollageTile next)
-    {
-        return CompareTo(next);
-    }
-}
 public class Dither : MonoBehaviour
 {
     [SerializeField] private Texture2D Debug_texture;
     [SerializeField] private Texture2D One_Ass;
     [SerializeField] private int width;
     [SerializeField] private int height;
-    [SerializeField] private float render_time;
+    [SerializeField] private float minRenderInterval;
     [SerializeField] private List<CollageTile> Tiles;
     [SerializeField] private GameObject spritePrefab;
     private int x=0;
@@ -48,6 +21,7 @@ public class Dither : MonoBehaviour
     private float[] pixel_error;
     private bool _dithering;
     private Vector3 cursorPos;
+    private float _lastRender;
     
     
     [ContextMenu("Bake Tiles")]
@@ -94,7 +68,7 @@ public class Dither : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_dithering)
+        if (_dithering && Time.time - _lastRender > minRenderInterval)
         {
             dither_iterate();
         }
@@ -127,11 +101,13 @@ public class Dither : MonoBehaviour
     {
         int tile_number;
 
-        pixel_error[x + y * width] += pixels[x + y * width].grayscale;
+        Color pixel = pixels[x + (height - (y + 1)) * width];
 
-        tile_number = threshold(pixels[x + y * width].grayscale);
+        pixel_error[x + y * width] += pixel.grayscale;
 
-        error_distribute = pixels[x + y * width].grayscale - Tiles[tile_number].brightness;
+        tile_number = threshold(pixel.grayscale);
+
+        error_distribute = pixel.grayscale - Tiles[tile_number].brightness;
 
         if (x < width - 1)
             pixel_error[x + 1 + y * width] += 7 / 16 * error_distribute;
@@ -179,5 +155,28 @@ public class Dither : MonoBehaviour
                 return mid;
         } while (first <= last);
         return mid;
+    }
+}
+
+[Serializable]
+public struct CollageTile : IComparable<CollageTile>
+{
+    public float brightness;
+    public Sprite sprite;
+
+    public CollageTile(float brightness, Sprite sprite)
+    {
+        this.brightness = brightness;
+        this.sprite = sprite;
+    }
+
+    public int CompareTo(CollageTile other)
+    {
+        return brightness.CompareTo(other.brightness);
+    }
+
+    int IComparable<CollageTile>.CompareTo(CollageTile next)
+    {
+        return CompareTo(next);
     }
 }
