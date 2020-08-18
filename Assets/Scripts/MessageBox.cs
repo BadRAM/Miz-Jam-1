@@ -6,41 +6,61 @@ public class MessageBox : Box
 {
     [SerializeField] private StringToSprites string1;
     [SerializeField] private StringToSprites string2;
-    [SerializeField] private float speed;
-    private bool transition = false;
+    [SerializeField] private Transform StartPos;
+    [SerializeField] private Transform EndPos;
+
+    [SerializeField] private float Delay;
+    [SerializeField] private float Delay2;
+    public float duration = 0.5f;
+    private float startTime;
+    private float journeyLength;
 
     // Start is called before the first frame update
     void Start()
     {
         UpdateBox();
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
+    {   
+        if(Time.time <= startTime + Delay)
         {
-            transition = true;
-        }
-        if (transition)
-        {
-            showMessage("That was horrible");
-        }
-        
-    }
-
-    private void showMessage(string message)
-    {
-        //default position = 17.5
-        transition = true;
-        if(transform.position.y > 17.5)
-        {
-            string2.updateSprites(message);
-            transform.Translate(Vector3.down * speed * Time.deltaTime);
+            showMessage();
         }
         else
         {
-            transition = false;
+            hideMessage();
         }
+        if(Time.time >= startTime + Delay * Delay2)
+        {
+            gameObject.SetActive(false);
+        }
+
+    }
+
+    private void showMessage()
+    {
+        float distCovered = (Time.time - startTime) * duration;
+        float fractionOfJourney = distCovered / journeyLength;
+        transform.position = Vector3.Lerp(StartPos.position, EndPos.position, fractionOfJourney);
+        transform.position = new Vector3((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
+    }
+
+    private void hideMessage()
+    {
+        float distCovered = (Time.time - (startTime+Delay)) * duration;
+        float fractionOfJourney = distCovered / journeyLength;
+        transform.position = Vector3.Lerp(EndPos.position, StartPos.position, fractionOfJourney);
+        transform.position = new Vector3((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
+    }
+
+    public void activateMessage(string Message)
+    {
+        string2.updateSprites(Message);
+        gameObject.SetActive(true);
+        startTime = Time.time;
+        journeyLength = Vector3.Distance(StartPos.position, EndPos.position);
     }
 }
