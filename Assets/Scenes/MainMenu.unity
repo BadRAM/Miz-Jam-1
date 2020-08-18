@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WhereToStop: 8.5
-  Second: 0.25
+  Second: 0.075
   Startbutton: {fileID: 5781856121053568164}
   Stopbutton: {fileID: 5781856121660189665}
 --- !u!1 &1238219503
