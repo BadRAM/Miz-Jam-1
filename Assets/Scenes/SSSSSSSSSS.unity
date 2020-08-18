@@ -7022,11 +7022,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &795688621 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3016899800259979514, guid: 09edaecadcbd78940a9667bf97efd521, type: 3}
-  m_PrefabInstance: {fileID: 718140138}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &795688622 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8076449978844594338, guid: 09edaecadcbd78940a9667bf97efd521, type: 3}
@@ -20204,11 +20199,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &3016899800194846783 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3016899800259979514, guid: 09edaecadcbd78940a9667bf97efd521, type: 3}
-  m_PrefabInstance: {fileID: 83818693}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5052755626697701186
 Transform:
   m_ObjectHideFlags: 0
@@ -20482,8 +20472,8 @@ MonoBehaviour:
   left: 7
   right: 29
   zLayer: -5
-  string1: {fileID: 3016899800194846783}
-  string2: {fileID: 795688621}
+  string1: {fileID: 0}
+  string2: {fileID: 0}
   speed: 10
 --- !u!212 &5109124340640628052
 SpriteRenderer:
