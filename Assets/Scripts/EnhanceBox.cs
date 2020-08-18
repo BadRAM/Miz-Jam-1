@@ -34,20 +34,23 @@ public class EnhanceBox : MonoBehaviour
         if (_active)
         {
             Vector3 pos = _camera.ScreenToWorldPoint(Input.mousePosition);
+
             int centerX = (int)Mathf.Clamp(pos.x, boxLeftBound + boxWidth, boxRightBound - boxWidth);
             int centerY = (int)Mathf.Clamp(pos.y, boxBottomBound + boxHeight, boxTopBound - boxHeight);
             _box.SetBoxCoords(centerY + boxHeight, centerY - boxHeight, centerX - boxWidth, centerX + boxWidth);
 
             if (Input.GetMouseButtonDown(0))
             {
-                Vector3 topLeft = new Vector3(
-                    Mathf.Clamp01((pos.x - (boxLeftBound + boxWidth)) / ((boxRightBound - boxWidth) - (boxLeftBound + boxWidth))),
-                    Mathf.Clamp01((pos.y - (boxBottomBound + boxHeight)) / ((boxTopBound - boxHeight) - (boxBottomBound + boxHeight))), 0);
+                if (pos.y < boxTopBound && pos.y > boxBottomBound && pos.x < boxRightBound && pos.x > boxLeftBound)
+                {
+                    Vector3 topLeft = new Vector3(
+                        Mathf.Clamp01((pos.x - (boxLeftBound + boxWidth)) / ((boxRightBound - boxWidth) - (boxLeftBound + boxWidth))),
+                        Mathf.Clamp01((pos.y - (boxBottomBound + boxHeight)) / ((boxTopBound - boxHeight) - (boxBottomBound + boxHeight))), 0);
                 
-                Debug.Log(topLeft);
-                _dither.ZoomIn(topLeft);
-                _zoomLevel = _dither.GetZoom();
-                
+                    Debug.Log(pos);
+                    _dither.ZoomIn(topLeft);
+                    _zoomLevel = _dither.GetZoom();
+                }
                 Deactivate();
             }
             else if (Input.GetMouseButtonDown(1))
@@ -62,6 +65,19 @@ public class EnhanceBox : MonoBehaviour
                 _dither.ZoomOut();
                 _zoomLevel = _dither.GetZoom();
             }
+        }
+    }
+
+    public void Cancel()
+    {
+        if (_active)
+        {
+            Deactivate();
+        }
+        else
+        {
+            _dither.ZoomOut();
+            _zoomLevel = _dither.GetZoom();
         }
     }
 
