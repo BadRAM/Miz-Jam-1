@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Dither : MonoBehaviour
 {
-    [SerializeField] private Texture2D Debug_texture;
+    [SerializeField] private Texture2D currentImage;
     [SerializeField] private Texture2D One_Ass;
     [SerializeField] private int width;
     [SerializeField] private int height;
@@ -21,10 +21,15 @@ public class Dither : MonoBehaviour
     private Color[] pixels;
     private float[] pixel_error;
     private bool _dithering;
+    private int _ditherCount;
+    private float _ditherStartTime;
     private Vector3 cursorPos;
-    private float _lastRender;
-    
-    
+    private int zoomLevel;
+    private int _lastZoomX;
+    private int _lastZoomY;
+    private GameObject _lastZoomSprites;
+
+
     [ContextMenu("Bake Tiles")]
     void BakeTiles()
     {
@@ -63,19 +68,22 @@ public class Dither : MonoBehaviour
     void Start()
     {
         //Array.Sort(Tiles);
-        start_dither(Debug_texture, 0, 0, 2);
+        start_dither(currentImage, 0, 0, 2);
+
+        _lastZoomSprites = new GameObject();
+        _lastZoomSprites.transform.parent = transform;
     }
 
     // Update is called once per frame
     void Update()
     {
         int renderCount = 0;
-        while (_dithering && renderCount * Time.deltaTime < minRenderInterval && renderCount < maxRendersPerFrame)
+        while (_dithering && _ditherCount * minRenderInterval < Time.time - _ditherStartTime && renderCount < maxRendersPerFrame)
         {
             dither_iterate();
+            _ditherCount++;
             renderCount++;
         }
-        Debug.Log(renderCount);
     }
 
     int threshold(float pixel_value)
@@ -84,13 +92,65 @@ public class Dither : MonoBehaviour
         return BinarySearch(Tiles.ToArray(), pixel_value);
     }
 
+    public int ZoomResDivisor()
+    {
+        switch (zoomLevel)
+        {
+            case 0:
+                return 1;
+            case 1:
+                return 2;
+            case 2:
+                return 4;
+        }
+        return 1;
+    }
+
+    public int ZoomToMip()
+    {
+        switch (zoomLevel)
+        {
+            case 0:
+                return 2;
+            case 1:
+                return 1;
+            case 2:
+                return 0;
+        }
+        return 2;
+    }
+
+    public void ZoomIn(Vector3 pos)
+    {
+        zoomLevel++;
+
+        int posx = (int)(pos.x * (currentImage.width / Mathf.Pow(2, zoomLevel) - 56));
+        int posy = (int)(pos.y * (currentImage.height / Mathf.Pow(2, zoomLevel) - 30));
+        
+        Debug.Log( "posx: " + posx + " posy: " + posy);
+        
+        start_dither(currentImage, posx, posy, ZoomToMip());
+    }
+
+    public void ZoomOut()
+    {
+        zoomLevel = 0;
+        start_dither(currentImage, 0, 0, 2);
+    }
+
     void start_dither(Texture2D input_image, int posx, int posy, int mipLevel)
     {
+        foreach (Transform child in transform) {
+            Destroy(child.gameObject);
+        }
+        
         
         //Code currently assumes that input_image is already WIDTH and HEIGHT pixels large.
         // If not, the pixels[x+y*width] in the for loop will need to be changed
 
         _dithering = true;
+        _ditherCount = 0;
+        _ditherStartTime = Time.time;
 
         pixels = input_image.GetPixels(posx, posy, width, height, mipLevel);
 
@@ -103,13 +163,11 @@ public class Dither : MonoBehaviour
 
     void dither_iterate()
     {
-        int tile_number;
-
         Color pixel = pixels[x + (height - (y + 1)) * width];
 
         pixel_error[x + y * width] += pixel.grayscale;
 
-        tile_number = threshold(pixel.grayscale);
+        int tile_number = threshold(pixel.grayscale);
 
         error_distribute = pixel.grayscale - Tiles[tile_number].brightness;
 
@@ -141,8 +199,6 @@ public class Dither : MonoBehaviour
                 _dithering = false;
             }
         }
-
-        _lastRender = Time.time;
     }
     
     public static int BinarySearch(CollageTile[] a, float item)

@@ -23,6 +23,7 @@ public class EnhanceBox : MonoBehaviour
     {
         _box = GetComponent<Box>();
         _camera = Camera.main;
+        _dither = FindObjectOfType<Dither>();
         _box.SetVisible(false);
     }
 
@@ -32,21 +33,31 @@ public class EnhanceBox : MonoBehaviour
         if (_active)
         {
             Vector3 pos = _camera.ScreenToWorldPoint(Input.mousePosition);
+            int centerX = (int)Mathf.Clamp(pos.x, boxLeftBound + boxWidth, boxRightBound - boxWidth);
+            int centerY = (int)Mathf.Clamp(pos.y, boxBottomBound + boxHeight, boxTopBound - boxHeight);
+            _box.SetBoxCoords(centerY + boxHeight, centerY - boxHeight, centerX - boxWidth, centerX + boxWidth);
 
             if (Input.GetMouseButtonDown(0))
             {
-                //zoom
+                Vector3 topLeft = new Vector3(
+                    Mathf.Clamp01((pos.x - boxLeftBound) / (boxRightBound - boxLeftBound)),
+                    Mathf.Clamp01((pos.y - boxBottomBound) / (boxTopBound - boxBottomBound)), 0);
+                
+                Debug.Log(topLeft);
+                _dither.ZoomIn(topLeft);
+                
                 Deactivate();
             }
             else if (Input.GetMouseButtonDown(1))
             {
                 Deactivate();
             }
-            else
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(1))
             {
-                int centerx = (int)Mathf.Clamp(pos.x, boxLeftBound + boxWidth, boxRightBound - boxWidth);
-                int centery = (int)Mathf.Clamp(pos.y, boxBottomBound + boxHeight, boxTopBound - boxHeight);
-                _box.SetBoxCoords(centery + boxHeight, centery - boxHeight, centerx - boxWidth, centerx + boxWidth);
+                _dither.ZoomOut();
             }
         }
     }
