@@ -1737,8 +1737,8 @@ MonoBehaviour:
   zLayer: -5
   string1: {fileID: 7971888318539744244}
   string2: {fileID: 7971888319109188059}
-  test1: {fileID: 0}
-  test2: {fileID: 0}
+  StartPos: {fileID: 0}
+  EndPos: {fileID: 0}
   Delay: 0
   Delay2: 0
   duration: 1

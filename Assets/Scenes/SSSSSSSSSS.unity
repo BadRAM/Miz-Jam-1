@@ -17162,7 +17162,6 @@ MonoBehaviour:
   - brightness: 1
     sprite: {fileID: -315616042660731212, guid: e9178df2a2bf3824c878d34450bfe375, type: 3}
   spritePrefab: {fileID: 2283200622640813097, guid: 4d80789592e03ed42b10db56a66216ca, type: 3}
-  Test: {fileID: 5109124340637818016}
 --- !u!4 &2027766914
 Transform:
   m_ObjectHideFlags: 0
@@ -18362,6 +18361,14 @@ PrefabInstance:
       propertyPath: Delay2
       value: 1.3
       objectReference: {fileID: 0}
+    - target: {fileID: 8326386247945466163, guid: 5dc0ca4249e2f9e42ae089a5a5411897, type: 3}
+      propertyPath: EndPos
+      value: 
+      objectReference: {fileID: 568925138}
+    - target: {fileID: 8326386247945466163, guid: 5dc0ca4249e2f9e42ae089a5a5411897, type: 3}
+      propertyPath: StartPos
+      value: 
+      objectReference: {fileID: 1185785361}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5dc0ca4249e2f9e42ae089a5a5411897, type: 3}
 --- !u!1 &5109124340637818015 stripped
@@ -18369,17 +18376,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8326386247945466124, guid: 5dc0ca4249e2f9e42ae089a5a5411897, type: 3}
   m_PrefabInstance: {fileID: 3848895058547338643}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5109124340637818016 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8326386247945466163, guid: 5dc0ca4249e2f9e42ae089a5a5411897, type: 3}
-  m_PrefabInstance: {fileID: 3848895058547338643}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5109124340637818015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba595cfbfcb1b17429328e31d6239906, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5264270923724556118
 GameObject:
   m_ObjectHideFlags: 0
