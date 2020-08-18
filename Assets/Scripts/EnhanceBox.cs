@@ -40,8 +40,8 @@ public class EnhanceBox : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 topLeft = new Vector3(
-                    Mathf.Clamp01((pos.x - boxLeftBound) / (boxRightBound - boxLeftBound)),
-                    Mathf.Clamp01((pos.y - boxBottomBound) / (boxTopBound - boxBottomBound)), 0);
+                    Mathf.Clamp01((pos.x - (boxLeftBound + boxWidth)) / ((boxRightBound - boxWidth) - (boxLeftBound + boxWidth))),
+                    Mathf.Clamp01((pos.y - (boxBottomBound + boxHeight)) / ((boxTopBound - boxHeight) - (boxBottomBound + boxHeight))), 0);
                 
                 Debug.Log(topLeft);
                 _dither.ZoomIn(topLeft);
