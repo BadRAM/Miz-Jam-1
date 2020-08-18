@@ -15,6 +15,10 @@ public class Box : MonoBehaviour
     [SerializeField] private Transform spriteSE;
     [SerializeField] private Transform spriteCenter;
 
+    [SerializeField] private bool startVisible;
+    [SerializeField] private bool centerVisible;
+
+
     [SerializeField] private int top;
     [SerializeField] private int bottom;
     [SerializeField] private int left;
@@ -25,7 +29,7 @@ public class Box : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        SetVisible(startVisible);
     }
 
 
@@ -77,7 +81,14 @@ public class Box : MonoBehaviour
         spriteSW.GetComponent<SpriteRenderer>().enabled = visible;
         spriteSE.GetComponent<SpriteRenderer>().enabled = visible;
         spriteS.GetComponent<SpriteRenderer>().enabled = visible;
-        spriteCenter.GetComponent<SpriteRenderer>().enabled = visible;
+        if (centerVisible)
+        {
+            spriteCenter.GetComponent<SpriteRenderer>().enabled = visible;
+        }
+        else
+        {
+            spriteCenter.GetComponent<SpriteRenderer>().enabled = false;
+        }
 
     }
 }

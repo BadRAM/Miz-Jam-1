@@ -149,6 +149,13 @@ public class Dither : MonoBehaviour
 
     public void ZoomOut()
     {
+        // catches an edge case if zooming out while zooming in.
+        if (_lastSpritesParent != null)
+        {
+            Destroy(_lastSpritesParent.gameObject);
+            _lastSpritesParent = null;
+        }
+        
         if (zoomLevel == 2)
         {
             zoomLevel = 1;
