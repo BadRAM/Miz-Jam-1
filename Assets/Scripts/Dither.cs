@@ -25,9 +25,10 @@ public class Dither : MonoBehaviour
     private float _ditherStartTime;
     private Vector3 cursorPos;
     private int zoomLevel;
-    private int _lastZoomX;
-    private int _lastZoomY;
-    private GameObject _lastZoomSprites;
+    private int _midZoomX;
+    private int _midZoomY;
+    private Transform _spritesParent;
+    private Transform _lastSpritesParent;
 
 
     [ContextMenu("Bake Tiles")]
@@ -68,10 +69,8 @@ public class Dither : MonoBehaviour
     void Start()
     {
         //Array.Sort(Tiles);
-        start_dither(currentImage, 0, 0, 2);
 
-        _lastZoomSprites = new GameObject();
-        _lastZoomSprites.transform.parent = transform;
+        start_dither(currentImage, 0, 0, 2);
     }
 
     // Update is called once per frame
@@ -124,25 +123,52 @@ public class Dither : MonoBehaviour
     {
         zoomLevel++;
 
-        int posx = (int)(pos.x * (currentImage.width / Mathf.Pow(2, zoomLevel) - 56));
-        int posy = (int)(pos.y * (currentImage.height / Mathf.Pow(2, zoomLevel) - 30));
+        int posx = 0;
+        int posy = 0;
         
+        if (zoomLevel == 1)
+        {
+            posx = (int) (pos.x * (width*2 - 56));
+            posy = (int) (pos.y * (height*2 - 30));
+            _midZoomX = posx;
+            _midZoomY = posy;
+        }
+        else //zoomlevel must be 2
+        {
+            posx = (int) (pos.x * (width*2 - 56)) + _midZoomX*2;
+            posy = (int) (pos.y * (height*2 - 30)) + _midZoomY*2;
+        }
+
         Debug.Log( "posx: " + posx + " posy: " + posy);
         
         start_dither(currentImage, posx, posy, ZoomToMip());
+        
+        _lastSpritesParent.localScale = Vector3.one * 2;
+        _lastSpritesParent.localPosition += Vector3.right * width * -pos.x + Vector3.up * height * (1f-pos.y) + Vector3.forward;
     }
 
     public void ZoomOut()
     {
-        zoomLevel = 0;
-        start_dither(currentImage, 0, 0, 2);
+        if (zoomLevel == 2)
+        {
+            zoomLevel = 1;
+            start_dither(currentImage, _midZoomX, _midZoomY, 1);
+        }
+        else
+        {
+            zoomLevel = 0;
+            start_dither(currentImage, 0, 0, 2);
+        }
+        
+        Destroy(_lastSpritesParent.gameObject);
+        _lastSpritesParent = null;
     }
 
     void start_dither(Texture2D input_image, int posx, int posy, int mipLevel)
     {
-        foreach (Transform child in transform) {
-            Destroy(child.gameObject);
-        }
+//        foreach (Transform child in transform) {
+//            Destroy(child.gameObject);
+//        }
         
         
         //Code currently assumes that input_image is already WIDTH and HEIGHT pixels large.
@@ -151,6 +177,12 @@ public class Dither : MonoBehaviour
         _dithering = true;
         _ditherCount = 0;
         _ditherStartTime = Time.time;
+
+        _lastSpritesParent = _spritesParent;
+        
+        _spritesParent = new GameObject().transform;
+        _spritesParent.transform.parent = transform;
+        _spritesParent.localPosition = Vector3.zero;
 
         pixels = input_image.GetPixels(posx, posy, width, height, mipLevel);
 
@@ -183,7 +215,7 @@ public class Dither : MonoBehaviour
         if (x > 0 && y < height - 1)
             pixel_error[x - 1 + (y + 1) * width] += 3 / 16 * error_distribute;
 
-        GameObject spriteObject = Instantiate(spritePrefab, transform);
+        GameObject spriteObject = Instantiate(spritePrefab, _spritesParent);
         spriteObject.transform.localPosition = Vector3.right * x + Vector3.down * y;
         spriteObject.GetComponent<SpriteRenderer>().sprite = Tiles[tile_number].sprite;
         
@@ -197,6 +229,12 @@ public class Dither : MonoBehaviour
             {
                 //nothing more to dither, stop dithering
                 _dithering = false;
+
+                if (_lastSpritesParent != null)
+                {
+                    Destroy(_lastSpritesParent.gameObject);
+                    _lastSpritesParent = null;
+                }
             }
         }
     }
