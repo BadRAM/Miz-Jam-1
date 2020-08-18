@@ -37,17 +37,9 @@ public class Box : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //UpdateBox();
-    }
-
-    public void SetBoxCoords(int Top, int Bottom, int Left, int Right)
-    {
-        top = Top;
-        bottom = Bottom;
-        left = Left;
-        right = Right;
         UpdateBox();
     }
+
 
     private void UpdateBox()
     {
@@ -63,19 +55,5 @@ public class Box : MonoBehaviour
         spriteS.position = new Vector3(right + (left - right)*0.5f, bottom, zLayer);
         spriteS.GetComponent<SpriteRenderer>().size = new Vector2(1, (right - left - 1));
         spriteSE.position = new Vector3(right, bottom, zLayer);
-    }
-
-    public void SetVisible(bool visible)
-    {
-        spriteNW.GetComponent<SpriteRenderer>().enabled = visible;
-        spriteN.GetComponent<SpriteRenderer>().enabled = visible;
-        spriteNE.GetComponent<SpriteRenderer>().enabled = visible;
-        spriteE.GetComponent<SpriteRenderer>().enabled = visible;
-        spriteW.GetComponent<SpriteRenderer>().enabled = visible;
-        spriteSW.GetComponent<SpriteRenderer>().enabled = visible;
-        spriteSE.GetComponent<SpriteRenderer>().enabled = visible;
-        spriteS.GetComponent<SpriteRenderer>().enabled = visible;
-        spriteCenter.GetComponent<SpriteRenderer>().enabled = visible;
-
     }
 }
