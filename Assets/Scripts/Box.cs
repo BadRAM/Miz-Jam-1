@@ -49,7 +49,7 @@ public class Box : MonoBehaviour
         UpdateBox();
     }
 
-    private void UpdateBox()
+    protected void UpdateBox()
     {
         spriteNW.position = new Vector3(left, top, zLayer);
         spriteN.position = new Vector3(right + (left - right)*0.5f, top, zLayer);
@@ -63,6 +63,9 @@ public class Box : MonoBehaviour
         spriteS.position = new Vector3(right + (left - right)*0.5f, bottom, zLayer);
         spriteS.GetComponent<SpriteRenderer>().size = new Vector2(1, (right - left - 1));
         spriteSE.position = new Vector3(right, bottom, zLayer);
+
+        spriteCenter.GetComponent<SpriteRenderer>().size = new Vector2((right-left - 1), (top - bottom - 1));
+        spriteCenter.position = new Vector3((right+left)*0.5f, (top+bottom)*0.5f, zLayer+1);
     }
 
     public void SetVisible(bool visible)
@@ -76,6 +79,11 @@ public class Box : MonoBehaviour
         spriteSE.GetComponent<SpriteRenderer>().enabled = visible;
         spriteS.GetComponent<SpriteRenderer>().enabled = visible;
         spriteCenter.GetComponent<SpriteRenderer>().enabled = visible;
+
+    }
+
+    public void moveBox()
+    {
 
     }
 }

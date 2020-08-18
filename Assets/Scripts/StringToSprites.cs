@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,21 +11,29 @@ public class StringToSprites : MonoBehaviour
     [SerializeField] private List<CharSprite> spriteMap;
     [SerializeField] private GameObject spritePrefab;
     [SerializeField] private float charWidth = 1f;
+    [SerializeField] private Boolean Test = false;
+    private Dictionary<char, Sprite> characterSpriteDict;
+
+    void Start()
+    {
+        characterSpriteDict = initiateDict();
+        CreateSprites();
+    }
+
+    public string TextToConvert
+    {
+        get { return textToConvert; }
+        set { textToConvert = value; }
+    }
 
     public void CreateSprites()
     {
-        Dictionary<char, Sprite> charSpriteDict = new Dictionary<char, Sprite>();
-        foreach (CharSprite cs in spriteMap)
-        {
-            charSpriteDict.Add(cs.character, cs.sprite);
-        }
 
-        foreach (Transform child in transform) {
-            DestroyImmediate(child.gameObject);
-        }
-        
+        Dictionary<char, Sprite> charSpriteDict = initiateDict();
+        deleteChildren();
+
         textToConvert = textToConvert.ToUpper();
-        
+
         Vector3 cursorPos = new Vector3();
         foreach (char character in textToConvert)
         {
@@ -37,6 +46,49 @@ public class StringToSprites : MonoBehaviour
             cursorPos += Vector3.right * charWidth;
         }
     }
+
+    public void deleteChildren()
+    {
+        int i = 0;
+        GameObject[] allChildren = new GameObject[transform.childCount];
+        foreach (Transform child in transform)
+        {
+            allChildren[i] = child.gameObject;
+            i += 1;
+        }
+        foreach (GameObject child in allChildren){
+            DestroyImmediate(child.gameObject);
+        }
+    }
+
+    private Dictionary<char, Sprite> initiateDict()
+    {
+        Dictionary<char, Sprite> Dict = new Dictionary<char, Sprite>();
+        foreach (CharSprite cs in spriteMap)
+        {
+            Dict.Add(cs.character, cs.sprite);
+        }
+        return Dict;
+    }
+
+    public void updateSprites(string updatedMessage)
+    {
+            deleteChildren();
+            updatedMessage = updatedMessage.ToUpper();
+
+            Vector3 cursorPos = new Vector3();
+            foreach(char character in updatedMessage)
+            {
+                GameObject spriteObject = Instantiate(spritePrefab, transform);
+                spriteObject.transform.localPosition = cursorPos;
+                if (characterSpriteDict.ContainsKey(character))
+                {
+                    spriteObject.GetComponent<SpriteRenderer>().sprite = characterSpriteDict[character];
+                }
+                cursorPos += Vector3.right * charWidth;
+            }
+    }
+
 }
 
 [Serializable]
@@ -61,3 +113,4 @@ class SurfaceEditor : Editor
 }
 
 #endif
+

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿{
     "files.exclude":
     {
@@ -53,4 +54,29 @@
         "temp/":true,
         "Temp/":true
     }
+=======
+{
+  // Configure glob patterns for excluding files and folders.
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/*.meta": true,
+    "**/*.*.meta": true,
+    "**/*.unity": true,
+    "**/*.unityproj": true,
+    "**/*.mat": true,
+    "**/*.fbx": true,
+    "**/*.FBX": true,
+    "**/*.tga": true,
+    "**/*.cubemap": true,
+    "**/*.prefab": true,
+    "**/Library": true,
+    "**/ProjectSettings": true,
+    "**/Temp": true
+  },
+  "javascript.format.placeOpenBraceOnNewLineForControlBlocks": true, 
+  "javascript.format.placeOpenBraceOnNewLineForFunctions": true,
+  "typescript.format.placeOpenBraceOnNewLineForControlBlocks": true,
+  "typescript.format.placeOpenBraceOnNewLineForFunctions": true,
+>>>>>>> e297482a3fb75f5be46beef96ecc1ac00064c26c
 }
