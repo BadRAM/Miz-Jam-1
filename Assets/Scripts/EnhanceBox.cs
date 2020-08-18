@@ -17,7 +17,8 @@ public class EnhanceBox : MonoBehaviour
     private Box _box;
     private Camera _camera;
     private Dither _dither;
-    
+    private int _zoomLevel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +46,7 @@ public class EnhanceBox : MonoBehaviour
                 
                 Debug.Log(topLeft);
                 _dither.ZoomIn(topLeft);
+                _zoomLevel = _dither.GetZoom();
                 
                 Deactivate();
             }
@@ -55,9 +57,10 @@ public class EnhanceBox : MonoBehaviour
         }
         else
         {
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(1) && _zoomLevel != 0)
             {
                 _dither.ZoomOut();
+                _zoomLevel = _dither.GetZoom();
             }
         }
     }
@@ -70,6 +73,10 @@ public class EnhanceBox : MonoBehaviour
 
     public void Activate()
     {
+        if (_zoomLevel == 2)
+        {
+            return;
+        }
         _active = true;
         _box.SetVisible(true);
     }

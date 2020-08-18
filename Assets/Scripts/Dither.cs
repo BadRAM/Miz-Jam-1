@@ -121,6 +121,11 @@ public class Dither : MonoBehaviour
 
     public void ZoomIn(Vector3 pos)
     {
+        if (zoomLevel == 2)
+        {
+            return;
+        }
+        
         zoomLevel++;
 
         int posx = 0;
@@ -149,6 +154,11 @@ public class Dither : MonoBehaviour
 
     public void ZoomOut()
     {
+        if (zoomLevel == 0)
+        {
+            return;
+        }
+        
         // catches an edge case if zooming out while zooming in.
         if (_lastSpritesParent != null)
         {
@@ -244,6 +254,11 @@ public class Dither : MonoBehaviour
                 }
             }
         }
+    }
+
+    public int GetZoom()
+    {
+        return zoomLevel;
     }
     
     public static int BinarySearch(CollageTile[] a, float item)
