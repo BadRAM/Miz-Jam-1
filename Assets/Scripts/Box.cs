@@ -16,12 +16,20 @@ public class Box : MonoBehaviour
     [SerializeField] private Transform spriteCenter;
     public bool BoxIsUpdating;
 
+    [SerializeField] private bool startVisible;
+    [SerializeField] private bool centerVisible;
+
     public int top;
     public int bottom;
     public int left;
     public int right;
 
     [SerializeField] private float zLayer;
+
+    void Start()
+    {
+        SetVisible(startVisible);
+    }
 
     private void OnValidate()
     {
@@ -60,7 +68,6 @@ public class Box : MonoBehaviour
         spriteS.position = new Vector3(right + (left - right)*0.5f, bottom, zLayer);
         spriteS.GetComponent<SpriteRenderer>().size = new Vector2(1, (right - left - 1));
         spriteSE.position = new Vector3(right, bottom, zLayer);
-
         spriteCenter.GetComponent<SpriteRenderer>().size = new Vector2((right-left - 1), (top - bottom - 1));
         spriteCenter.position = new Vector3((right+left)*0.5f, (top+bottom)*0.5f, zLayer+1);
     }
@@ -75,7 +82,14 @@ public class Box : MonoBehaviour
         spriteSW.GetComponent<SpriteRenderer>().enabled = visible;
         spriteSE.GetComponent<SpriteRenderer>().enabled = visible;
         spriteS.GetComponent<SpriteRenderer>().enabled = visible;
-        spriteCenter.GetComponent<SpriteRenderer>().enabled = visible;
+        if (centerVisible)
+        {
+            spriteCenter.GetComponent<SpriteRenderer>().enabled = visible;
+        }
+        else
+        {
+            spriteCenter.GetComponent<SpriteRenderer>().enabled = false;
+        }
 
     }
 

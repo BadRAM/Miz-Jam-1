@@ -8,6 +8,7 @@ using UnityEngine;
 public class Dither : MonoBehaviour
 {
     [SerializeField] private Texture2D currentImage;
+    [SerializeField] private Image image;
     [SerializeField] private Texture2D One_Ass;
     [SerializeField] private int width;
     [SerializeField] private int height;
@@ -121,6 +122,17 @@ public class Dither : MonoBehaviour
 
     public void ZoomIn(Vector3 pos)
     {
+        if (_lastSpritesParent != null)
+        {
+            Destroy(_lastSpritesParent.gameObject);
+            _lastSpritesParent = null;
+        }
+        
+        if (zoomLevel == 2)
+        {
+            return;
+        }
+        
         zoomLevel++;
 
         int posx = 0;
@@ -149,6 +161,18 @@ public class Dither : MonoBehaviour
 
     public void ZoomOut()
     {
+        // catches an edge case if zooming out while zooming in.
+        if (_lastSpritesParent != null)
+        {
+            Destroy(_lastSpritesParent.gameObject);
+            _lastSpritesParent = null;
+        }
+ 
+        if (zoomLevel == 0)
+        {
+            return;
+        }
+        
         if (zoomLevel == 2)
         {
             zoomLevel = 1;
@@ -166,11 +190,6 @@ public class Dither : MonoBehaviour
 
     void start_dither(Texture2D input_image, int posx, int posy, int mipLevel)
     {
-//        foreach (Transform child in transform) {
-//            Destroy(child.gameObject);
-//        }
-        
-        
         //Code currently assumes that input_image is already WIDTH and HEIGHT pixels large.
         // If not, the pixels[x+y*width] in the for loop will need to be changed
 
@@ -237,6 +256,11 @@ public class Dither : MonoBehaviour
                 }
             }
         }
+    }
+
+    public int GetZoom()
+    {
+        return zoomLevel;
     }
     
     public static int BinarySearch(CollageTile[] a, float item)
