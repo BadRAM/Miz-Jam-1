@@ -18,7 +18,8 @@ public class StringToSprites : MonoBehaviour
     void Start()
     {
         characterSpriteDict = initiateDict();
-        CreateSprites();
+        StartCoroutine(SpritesAnim());
+        // CreateSprites();
     }
     public string TextToConvert
     {
@@ -87,6 +88,26 @@ public class StringToSprites : MonoBehaviour
             }
             cursorPos += Vector3.right * charWidth;
         }
+    }
+
+    IEnumerator SpritesAnim()
+    {
+        Dictionary<char, Sprite> charSpriteDict = initiateDict();
+        deleteChildren();
+        textToConvert = textToConvert.ToUpper();
+        Vector3 cursorPos = new Vector3();
+        foreach (char character in textToConvert)
+        {
+            yield return new WaitForSeconds(0.1f);
+            GameObject spriteObject = Instantiate(spritePrefab, transform);
+            spriteObject.transform.localPosition = cursorPos;
+            if (charSpriteDict.ContainsKey(character))
+            {
+                spriteObject.GetComponent<SpriteRenderer>().sprite = charSpriteDict[character];
+            }
+            cursorPos += Vector3.right * charWidth;
+        }
+        StopCoroutine(SpritesAnim());
     }
 }
 
