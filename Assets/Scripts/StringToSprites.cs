@@ -13,13 +13,13 @@ public class StringToSprites : MonoBehaviour
     [SerializeField] private float charWidth = 1f;
     [SerializeField] private Boolean Test = false;
     private Dictionary<char, Sprite> characterSpriteDict;
+    [SerializeField] private List<GameObject> sprites = new List<GameObject>();
 
     void Start()
     {
         characterSpriteDict = initiateDict();
         CreateSprites();
     }
-
     public string TextToConvert
     {
         get { return textToConvert; }
@@ -73,22 +73,21 @@ public class StringToSprites : MonoBehaviour
 
     public void updateSprites(string updatedMessage)
     {
-            deleteChildren();
-            updatedMessage = updatedMessage.ToUpper();
+        deleteChildren();
+        updatedMessage = updatedMessage.ToUpper();
 
-            Vector3 cursorPos = new Vector3();
-            foreach(char character in updatedMessage)
+        Vector3 cursorPos = new Vector3();
+        foreach(char character in updatedMessage)
+        {
+            GameObject spriteObject = Instantiate(spritePrefab, transform);
+            spriteObject.transform.localPosition = cursorPos;
+            if (characterSpriteDict.ContainsKey(character))
             {
-                GameObject spriteObject = Instantiate(spritePrefab, transform);
-                spriteObject.transform.localPosition = cursorPos;
-                if (characterSpriteDict.ContainsKey(character))
-                {
-                    spriteObject.GetComponent<SpriteRenderer>().sprite = characterSpriteDict[character];
-                }
-                cursorPos += Vector3.right * charWidth;
+                  spriteObject.GetComponent<SpriteRenderer>().sprite = characterSpriteDict[character];
             }
+            cursorPos += Vector3.right * charWidth;
+        }
     }
-
 }
 
 [Serializable]

@@ -14,20 +14,14 @@ public class Box : MonoBehaviour
     [SerializeField] private Transform spriteS;
     [SerializeField] private Transform spriteSE;
     [SerializeField] private Transform spriteCenter;
+    public bool BoxIsUpdating;
 
-    [SerializeField] private int top;
-    [SerializeField] private int bottom;
-    [SerializeField] private int left;
-    [SerializeField] private int right;
+    public int top;
+    public int bottom;
+    public int left;
+    public int right;
 
     [SerializeField] private float zLayer;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
 
     private void OnValidate()
     {
@@ -37,7 +31,10 @@ public class Box : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //UpdateBox();
+        if(BoxIsUpdating)
+        {
+            UpdateBox();
+        }
     }
 
     public void SetBoxCoords(int Top, int Bottom, int Left, int Right)

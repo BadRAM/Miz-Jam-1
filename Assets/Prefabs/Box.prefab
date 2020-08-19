@@ -307,6 +307,7 @@ MonoBehaviour:
   spriteS: {fileID: 5781856122182332941}
   spriteSE: {fileID: 5781856121010411860}
   spriteCenter: {fileID: 5820049840066646849}
+  BoxIsUpdating: 0
   top: 3
   bottom: -3
   left: -3
