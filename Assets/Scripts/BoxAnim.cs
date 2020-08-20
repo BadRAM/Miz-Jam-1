@@ -26,8 +26,8 @@ public class BoxAnim : MonoBehaviour
         zLayer = this.transform.position.z;
         if(box != null)
         {
-            box.top = 0;
-            box.bottom = 0;
+            box.top = BoxTop - (BoxTop - BoxBottom)/2;
+            box.bottom = BoxBottom + (BoxTop - BoxBottom)/2;
             box.right = 0;
             box.left = 0;
             StartCoroutine(BoxAnimation(AnimationSpeed));
@@ -56,27 +56,24 @@ public class BoxAnim : MonoBehaviour
         StartAnim = false;
         box.BoxIsUpdating = true;
         transform.position = new Vector3(transform.position.x, transform.position.y, zLayer);
-        while(box.top != BoxTop)
-        {
-            yield return new WaitForSeconds(sec);
-            box.top++;
-            box.bottom--;
 
-        }
-
-        box.top = BoxTop;
-        box.bottom = BoxBottom;
-        
         while(box.right != BoxRight)
         {
             yield return new WaitForSeconds(sec);
             box.right++;
             box.left--;
         }
-
         box.left = BoxLeft;
-        box.right = BoxRight;
         
+        while(box.top != BoxTop)
+        {
+            yield return new WaitForSeconds(sec);
+            box.top++;
+            box.bottom--;
+        }
+        box.bottom = BoxBottom;
+        
+        box.UpdateBox();
         box.BoxIsUpdating = false;
         yield return new WaitForSeconds(sec);
         if(dither != null)
@@ -146,23 +143,21 @@ public class BoxAnim : MonoBehaviour
         {
             yield return new WaitForSeconds(sec);
             box.top--;
-        }
-        while(box.bottom != 0)
-        {
-            yield return new WaitForSeconds(sec);
             box.bottom++;
         }
+        box.bottom = 0;
+        
         while(box.right != 0)
         {
             yield return new WaitForSeconds(sec);
             box.right--;
-        }
-        while(box.left != 0)
-        {
-            yield return new WaitForSeconds(sec);
             box.left++;
         }
+        box.left = 0;
+        
         transform.position = new Vector3(transform.position.x, transform.position.y, 30);
+        
+        box.UpdateBox();
         box.BoxIsUpdating = false;
         StopCoroutine(BoxAnimationReverse(AnimationSpeed));
     }
