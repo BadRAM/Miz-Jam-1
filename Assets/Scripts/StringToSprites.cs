@@ -14,17 +14,31 @@ public class StringToSprites : MonoBehaviour
     [SerializeField] private Boolean Test = false;
     private Dictionary<char, Sprite> characterSpriteDict;
     [SerializeField] private List<GameObject> sprites = new List<GameObject>();
+    public bool _TextPlay;
+    public bool _TextPlayReverse = false;
+    public Button _button;
 
     void Start()
     {
         characterSpriteDict = initiateDict();
-        StartCoroutine(SpritesAnim());
         // CreateSprites();
     }
     public string TextToConvert
     {
         get { return textToConvert; }
         set { textToConvert = value; }
+    }
+    void Update()
+    {
+        if(_TextPlay == true)
+        {
+            StartCoroutine(SpritesAnim());
+        }
+
+        if(_TextPlayReverse == true)
+        {
+            StartCoroutine(SpritesAnimReverse());
+        }
     }
 
     public void CreateSprites()
@@ -90,8 +104,9 @@ public class StringToSprites : MonoBehaviour
         }
     }
 
-    IEnumerator SpritesAnim()
+    public IEnumerator SpritesAnim()
     {
+        _TextPlay = false;
         Dictionary<char, Sprite> charSpriteDict = initiateDict();
         deleteChildren();
         textToConvert = textToConvert.ToUpper();
@@ -101,13 +116,49 @@ public class StringToSprites : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             GameObject spriteObject = Instantiate(spritePrefab, transform);
             spriteObject.transform.localPosition = cursorPos;
+            
             if (charSpriteDict.ContainsKey(character))
             {
                 spriteObject.GetComponent<SpriteRenderer>().sprite = charSpriteDict[character];
+                if(_button != null)
+                {
+                    _button.Sprites.Add(spriteObject.GetComponent<SpriteRenderer>());
+                    for(var i = _button.Sprites.Count - 1; i >  -1; --i)
+                    {
+                        if(_button.Sprites[i] == null)
+                        {
+                            _button.Sprites.RemoveAt(i);
+                        }
+                    }
+                }
             }
             cursorPos += Vector3.right * charWidth;
         }
         StopCoroutine(SpritesAnim());
+    }
+    public IEnumerator SpritesAnimReverse()
+    {
+        _TextPlayReverse = false;
+        int i = 0;
+        GameObject[] allChildren = new GameObject[transform.childCount];
+        foreach (Transform child in transform)
+        {
+            allChildren[i] = child.gameObject;
+            i += 1;
+        }
+        foreach (Transform child in transform)
+        {
+            yield return new WaitForSeconds(0.1f);
+            Destroy(child.gameObject);
+        }
+        if(transform.childCount != 0)
+        {
+            _TextPlayReverse = true;
+        }
+        else
+        {
+            StopCoroutine(SpritesAnimReverse());
+        }
     }
 }
 

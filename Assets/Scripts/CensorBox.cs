@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CensorBox : MonoBehaviour
 {
-<<<<<<< HEAD
-=======
 
     private bool _active; // starts true, is set to false once placed and static.
     private bool _held; // 
@@ -14,7 +12,6 @@ public class CensorBox : MonoBehaviour
     private Vector3 _point1;
     
     
->>>>>>> e2dfe6595fd5f0d342c94e3663380ee2bb9b88a4
     // Start is called before the first frame update
     void Start()
     {
@@ -24,9 +21,6 @@ public class CensorBox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-<<<<<<< HEAD
-        
-=======
         if (_active)
         {
             if (!_held)
@@ -59,6 +53,5 @@ public class CensorBox : MonoBehaviour
     public void Deactivate()
     {
         _active = false;
->>>>>>> e2dfe6595fd5f0d342c94e3663380ee2bb9b88a4
     }
 }

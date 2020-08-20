@@ -1,19 +1,31 @@
 ﻿using UnityEngine.Events;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 using UnityEngine;
 
 public class Button : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer[] Sprites;
     [SerializeField] private int IndexOfNextScene;
+    [SerializeField] private AudioClip _ButtonIsHoveredOver;
+    [SerializeField] private AudioClip _ButtonIsPressed;
+    [SerializeField] private AudioSource _AS;
 
     public UnityEvent Clicked;
+    public List<SpriteRenderer> Sprites = new List<SpriteRenderer>();
     
     private void OnMouseEnter() 
     {
         foreach(SpriteRenderer Sprite in Sprites)
         {
-            Sprite.color = Color.grey;
+            if(Sprites != null)
+            {
+                Sprite.color = Color.grey;
+                if(_AS != null)
+                {
+                    _AS.PlayOneShot(_ButtonIsHoveredOver);
+                }
+            }
         }
     }
 
@@ -24,16 +36,20 @@ public class Button : MonoBehaviour
             Sprite.color = Color.white;
         }
     }
-    void OnMouseDown()
+    private void OnMouseDown()
     {
         foreach(SpriteRenderer Sprite in Sprites)
         {
             Sprite.color = Color.red;
+            if(_AS != null)
+            {
+                _AS.PlayOneShot(_ButtonIsPressed);
+            }
         }
         Clicked.Invoke();
     }
 
-    void OnMouseUp() 
+    private void OnMouseUp() 
     {        
         foreach(SpriteRenderer Sprite in Sprites)
         {
