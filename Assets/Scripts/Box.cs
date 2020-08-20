@@ -54,7 +54,7 @@ public class Box : MonoBehaviour
         UpdateBox();
     }
 
-    protected void UpdateBox()
+    public void UpdateBox()
     {
         spriteNW.position = new Vector3(left, top, zLayer);
         spriteN.position = new Vector3(right + (left - right)*0.5f, top, zLayer);
