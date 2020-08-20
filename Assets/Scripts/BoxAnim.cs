@@ -60,22 +60,23 @@ public class BoxAnim : MonoBehaviour
         {
             yield return new WaitForSeconds(sec);
             box.top++;
-        }
-        while(box.bottom != BoxBottom)
-        {
-            yield return new WaitForSeconds(sec);
             box.bottom--;
+
         }
+
+        box.top = BoxTop;
+        box.bottom = BoxBottom;
+        
         while(box.right != BoxRight)
         {
             yield return new WaitForSeconds(sec);
             box.right++;
-        }
-        while(box.left != BoxLeft)
-        {
-            yield return new WaitForSeconds(sec);
             box.left--;
         }
+
+        box.left = BoxLeft;
+        box.right = BoxRight;
+        
         box.BoxIsUpdating = false;
         yield return new WaitForSeconds(sec);
         if(dither != null)
