@@ -31,6 +31,11 @@ public class EnhanceBox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(_dither == null)
+        {
+            _dither = FindObjectOfType<Dither>();
+        }
+        
         if (_active)
         {
             Vector3 pos = _camera.ScreenToWorldPoint(Input.mousePosition);

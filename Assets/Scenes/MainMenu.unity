@@ -141,9 +141,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WhereToStop: 8.5
-  Second: 0.25
+  Second: 0.075
   Startbutton: {fileID: 5781856121053568164}
   Stopbutton: {fileID: 5781856121660189665}
+  _TheLogoWhenMoving: {fileID: 0}
+  _ButtonsAppearing: {fileID: 0}
+  _SourceThis: {fileID: 0}
 --- !u!1 &1238219503
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,6 +454,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuitButton
       objectReference: {fileID: 0}
+    - target: {fileID: 4051689570520123731, guid: 7b6494c1d7b8ec946a324436d61d7c0d, type: 3}
+      propertyPath: _TextPlay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4051689570520123731, guid: 7b6494c1d7b8ec946a324436d61d7c0d, type: 3}
+      propertyPath: _button
+      value: 
+      objectReference: {fileID: 5781856121660189666}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b6494c1d7b8ec946a324436d61d7c0d, type: 3}
 --- !u!1 &5781856121053568164 stripped
@@ -458,11 +469,33 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3869368836413067911, guid: 949f532a307360648b4fe114ee030e24, type: 3}
   m_PrefabInstance: {fileID: 7641296547961768598}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5781856121053568165 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7318215213896808406, guid: 949f532a307360648b4fe114ee030e24, type: 3}
+  m_PrefabInstance: {fileID: 7641296547961768598}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5781856121053568164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01d7c09875d817148bb1ab7d4f8d7b46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5781856121660189665 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3732615654564956087, guid: 7b6494c1d7b8ec946a324436d61d7c0d, type: 3}
   m_PrefabInstance: {fileID: 1821713088337990122}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5781856121660189666 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7201728229701303799, guid: 7b6494c1d7b8ec946a324436d61d7c0d, type: 3}
+  m_PrefabInstance: {fileID: 1821713088337990122}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5781856121660189665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01d7c09875d817148bb1ab7d4f8d7b46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7641296547961768598
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -517,6 +550,26 @@ PrefabInstance:
     - target: {fileID: 3869368836413067911, guid: 949f532a307360648b4fe114ee030e24, type: 3}
       propertyPath: m_Name
       value: Startbutton
+      objectReference: {fileID: 0}
+    - target: {fileID: 7318215213896808406, guid: 949f532a307360648b4fe114ee030e24, type: 3}
+      propertyPath: Clicked.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5781856121053568165}
+    - target: {fileID: 7318215213896808406, guid: 949f532a307360648b4fe114ee030e24, type: 3}
+      propertyPath: Clicked.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 7963699134443175599, guid: 949f532a307360648b4fe114ee030e24, type: 3}
+      propertyPath: _TextPlay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7963699134443175599, guid: 949f532a307360648b4fe114ee030e24, type: 3}
+      propertyPath: _button
+      value: 
+      objectReference: {fileID: 5781856121053568165}
+    - target: {fileID: 7963699134443175599, guid: 949f532a307360648b4fe114ee030e24, type: 3}
+      propertyPath: Test
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 949f532a307360648b4fe114ee030e24, type: 3}

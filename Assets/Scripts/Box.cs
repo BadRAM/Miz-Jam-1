@@ -14,24 +14,22 @@ public class Box : MonoBehaviour
     [SerializeField] private Transform spriteS;
     [SerializeField] private Transform spriteSE;
     [SerializeField] private Transform spriteCenter;
+    public bool BoxIsUpdating;
 
     [SerializeField] private bool startVisible;
     [SerializeField] private bool centerVisible;
 
-
-    [SerializeField] private int top;
-    [SerializeField] private int bottom;
-    [SerializeField] private int left;
-    [SerializeField] private int right;
+    public int top;
+    public int bottom;
+    public int left;
+    public int right;
 
     [SerializeField] private float zLayer;
 
-    // Start is called before the first frame update
     void Start()
     {
         SetVisible(startVisible);
     }
-
 
     private void OnValidate()
     {
@@ -41,7 +39,10 @@ public class Box : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //UpdateBox();
+        if(BoxIsUpdating)
+        {
+            UpdateBox();
+        }
     }
 
     public void SetBoxCoords(int Top, int Bottom, int Left, int Right)
@@ -53,7 +54,7 @@ public class Box : MonoBehaviour
         UpdateBox();
     }
 
-    private void UpdateBox()
+    protected void UpdateBox()
     {
         spriteNW.position = new Vector3(left, top, zLayer);
         spriteN.position = new Vector3(right + (left - right)*0.5f, top, zLayer);
@@ -89,6 +90,11 @@ public class Box : MonoBehaviour
         {
             spriteCenter.GetComponent<SpriteRenderer>().enabled = false;
         }
+
+    }
+
+    public void moveBox()
+    {
 
     }
 }
