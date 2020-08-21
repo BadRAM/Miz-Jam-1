@@ -6,6 +6,7 @@ public class MessageBox : Box
 {
     [SerializeField] private StringToSprites string1;
     [SerializeField] private StringToSprites string2;
+    [SerializeField] private StringToSprites string3;
     [SerializeField] private Transform StartPos;
     [SerializeField] private Transform EndPos;
 
@@ -24,8 +25,13 @@ public class MessageBox : Box
 
     // Update is called once per frame
     void Update()
-    {   
-        if(Time.time <= startTime + Delay)
+    {
+        messageManager();
+    }
+
+    void messageManager()
+    {
+        if (Time.time <= startTime + Delay)
         {
             showMessage();
         }
@@ -33,11 +39,10 @@ public class MessageBox : Box
         {
             hideMessage();
         }
-        if(Time.time >= startTime + Delay * Delay2)
+        if (Time.time >= startTime + Delay * Delay2)
         {
             gameObject.SetActive(false);
         }
-
     }
 
     private void showMessage()
@@ -56,9 +61,10 @@ public class MessageBox : Box
         transform.position = new Vector3((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
     }
 
-    public void activateMessage(string Message)
+    public void activateMessage(string Line1, string Line2="")
     {
-        string2.updateSprites(Message);
+        string2.updateSprites(Line1);
+        string3.updateSprites(Line2);
         gameObject.SetActive(true);
         startTime = Time.time;
         journeyLength = Vector3.Distance(StartPos.position, EndPos.position);
