@@ -15,12 +15,17 @@ public class StringToSprites : MonoBehaviour
     private Dictionary<char, Sprite> characterSpriteDict;
     [SerializeField] private List<GameObject> sprites = new List<GameObject>();
     public bool _TextPlay;
+    public bool _StartWithNoText = false;
     public bool _TextPlayReverse = false;
     public Button _button;
 
     void Start()
     {
         characterSpriteDict = initiateDict();
+        if(_StartWithNoText)
+        {
+            deleteChildren();
+        }
         // CreateSprites();
     }
     public string TextToConvert
@@ -30,6 +35,7 @@ public class StringToSprites : MonoBehaviour
     }
     void Update()
     {
+
         if(_TextPlay == true)
         {
             StartCoroutine(SpritesAnim());
