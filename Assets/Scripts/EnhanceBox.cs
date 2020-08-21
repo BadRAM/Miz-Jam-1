@@ -16,37 +16,73 @@ public class EnhanceBox : MonoBehaviour
     private bool _active;
     private Box _box;
     private Camera _camera;
-    
+    private Dither _dither;
+    private int _zoomLevel;
+
     // Start is called before the first frame update
     void Start()
     {
         _box = GetComponent<Box>();
         _camera = Camera.main;
-        _active = true;
+        _dither = FindObjectOfType<Dither>();
+        _box.SetVisible(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(_dither == null)
+        {
+            _dither = FindObjectOfType<Dither>();
+        }
+        
         if (_active)
         {
             Vector3 pos = _camera.ScreenToWorldPoint(Input.mousePosition);
 
+            int centerX = (int)Mathf.Clamp(pos.x, boxLeftBound + boxWidth, boxRightBound - boxWidth);
+            int centerY = (int)Mathf.Clamp(pos.y, boxBottomBound + boxHeight, boxTopBound - boxHeight);
+            _box.SetBoxCoords(centerY + boxHeight, centerY - boxHeight, centerX - boxWidth, centerX + boxWidth);
+
             if (Input.GetMouseButtonDown(0))
             {
-                //zoom
+                if (pos.y < boxTopBound && pos.y > boxBottomBound && pos.x < boxRightBound && pos.x > boxLeftBound)
+                {
+                    Vector3 topLeft = new Vector3(
+                        Mathf.Clamp01((pos.x - (boxLeftBound + boxWidth)) / ((boxRightBound - boxWidth) - (boxLeftBound + boxWidth))),
+                        Mathf.Clamp01((pos.y - (boxBottomBound + boxHeight)) / ((boxTopBound - boxHeight) - (boxBottomBound + boxHeight))), 0);
+                
+                    Debug.Log(pos);
+                    _dither.ZoomIn(topLeft);
+                    _zoomLevel = _dither.GetZoom();
+                }
                 Deactivate();
             }
             else if (Input.GetMouseButtonDown(1))
             {
                 Deactivate();
             }
-            else
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(1) && _zoomLevel != 0)
             {
-                int centerx = (int)Mathf.Clamp(pos.x, boxLeftBound + boxWidth, boxRightBound - boxWidth);
-                int centery = (int)Mathf.Clamp(pos.y, boxBottomBound + boxHeight, boxTopBound - boxHeight);
-                _box.SetBoxCoords(centery + boxHeight, centery - boxHeight, centerx - boxWidth, centerx + boxWidth);
+                _dither.ZoomOut();
+                _zoomLevel = _dither.GetZoom();
             }
+        }
+    }
+
+    public void Cancel()
+    {
+        if (_active)
+        {
+            Deactivate();
+        }
+        else
+        {
+            _dither.ZoomOut();
+            _zoomLevel = _dither.GetZoom();
         }
     }
 
@@ -58,6 +94,10 @@ public class EnhanceBox : MonoBehaviour
 
     public void Activate()
     {
+        if (_zoomLevel == 2)
+        {
+            return;
+        }
         _active = true;
         _box.SetVisible(true);
     }

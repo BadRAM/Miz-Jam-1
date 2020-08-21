@@ -7,11 +7,13 @@ using UnityEngine;
 
 public class Dither : MonoBehaviour
 {
-    [SerializeField] private Texture2D Debug_texture;
+    [SerializeField] private Texture2D currentImage;
+    [SerializeField] private Image image;
     [SerializeField] private Texture2D One_Ass;
     [SerializeField] private int width;
     [SerializeField] private int height;
     [SerializeField] private float minRenderInterval;
+    [SerializeField] private int maxRendersPerFrame;
     [SerializeField] private List<CollageTile> Tiles;
     [SerializeField] private GameObject spritePrefab;
     private int x=0;
@@ -20,10 +22,16 @@ public class Dither : MonoBehaviour
     private Color[] pixels;
     private float[] pixel_error;
     private bool _dithering;
+    private int _ditherCount;
+    private float _ditherStartTime;
     private Vector3 cursorPos;
-    private float _lastRender;
-    
-    
+    private int zoomLevel;
+    private int _midZoomX;
+    private int _midZoomY;
+    private Transform _spritesParent;
+    private Transform _lastSpritesParent;
+
+
     [ContextMenu("Bake Tiles")]
     void BakeTiles()
     {
@@ -62,15 +70,19 @@ public class Dither : MonoBehaviour
     void Start()
     {
         //Array.Sort(Tiles);
-        start_dither(Debug_texture, 0, 0, 2);
+
+        start_dither(currentImage, 0, 0, 2);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_dithering && Time.time - _lastRender > minRenderInterval)
+        int renderCount = 0;
+        while (_dithering && _ditherCount * minRenderInterval < Time.time - _ditherStartTime && renderCount < maxRendersPerFrame)
         {
             dither_iterate();
+            _ditherCount++;
+            renderCount++;
         }
     }
 
@@ -80,13 +92,116 @@ public class Dither : MonoBehaviour
         return BinarySearch(Tiles.ToArray(), pixel_value);
     }
 
+    public int ZoomResDivisor()
+    {
+        switch (zoomLevel)
+        {
+            case 0:
+                return 1;
+            case 1:
+                return 2;
+            case 2:
+                return 4;
+        }
+        return 1;
+    }
+
+    public int ZoomToMip()
+    {
+        switch (zoomLevel)
+        {
+            case 0:
+                return 2;
+            case 1:
+                return 1;
+            case 2:
+                return 0;
+        }
+        return 2;
+    }
+
+    public void ZoomIn(Vector3 pos)
+    {
+        if (_lastSpritesParent != null)
+        {
+            Destroy(_lastSpritesParent.gameObject);
+            _lastSpritesParent = null;
+        }
+        
+        if (zoomLevel == 2)
+        {
+            return;
+        }
+        
+        zoomLevel++;
+
+        int posx = 0;
+        int posy = 0;
+        
+        if (zoomLevel == 1)
+        {
+            posx = (int) (pos.x * (width*2 - 56));
+            posy = (int) (pos.y * (height*2 - 30));
+            _midZoomX = posx;
+            _midZoomY = posy;
+        }
+        else //zoomlevel must be 2
+        {
+            posx = (int) (pos.x * (width*2 - 56)) + _midZoomX*2;
+            posy = (int) (pos.y * (height*2 - 30)) + _midZoomY*2;
+        }
+
+        Debug.Log( "posx: " + posx + " posy: " + posy);
+        
+        start_dither(currentImage, posx, posy, ZoomToMip());
+        
+        _lastSpritesParent.localScale = Vector3.one * 2;
+        _lastSpritesParent.localPosition += Vector3.right * width * -pos.x + Vector3.up * height * (1f-pos.y) + Vector3.forward;
+    }
+
+    public void ZoomOut()
+    {
+        // catches an edge case if zooming out while zooming in.
+        if (_lastSpritesParent != null)
+        {
+            Destroy(_lastSpritesParent.gameObject);
+            _lastSpritesParent = null;
+        }
+ 
+        if (zoomLevel == 0)
+        {
+            return;
+        }
+        
+        if (zoomLevel == 2)
+        {
+            zoomLevel = 1;
+            start_dither(currentImage, _midZoomX, _midZoomY, 1);
+        }
+        else
+        {
+            zoomLevel = 0;
+            start_dither(currentImage, 0, 0, 2);
+        }
+        
+        Destroy(_lastSpritesParent.gameObject);
+        _lastSpritesParent = null;
+    }
+
     void start_dither(Texture2D input_image, int posx, int posy, int mipLevel)
     {
-        
         //Code currently assumes that input_image is already WIDTH and HEIGHT pixels large.
         // If not, the pixels[x+y*width] in the for loop will need to be changed
 
         _dithering = true;
+        _ditherCount = 0;
+        _ditherStartTime = Time.time;
+
+        _lastSpritesParent = _spritesParent;
+        
+        _spritesParent = new GameObject().transform;
+        _spritesParent.transform.parent = transform;
+        _spritesParent.localPosition = Vector3.zero;
 
         pixels = input_image.GetPixels(posx, posy, width, height, mipLevel);
 
@@ -99,13 +214,11 @@ public class Dither : MonoBehaviour
 
     void dither_iterate()
     {
-        int tile_number;
-
         Color pixel = pixels[x + (height - (y + 1)) * width];
 
         pixel_error[x + y * width] += pixel.grayscale;
 
-        tile_number = threshold(pixel.grayscale);
+        int tile_number = threshold(pixel.grayscale);
 
         error_distribute = pixel.grayscale - Tiles[tile_number].brightness;
 
@@ -121,7 +234,7 @@ public class Dither : MonoBehaviour
         if (x > 0 && y < height - 1)
             pixel_error[x - 1 + (y + 1) * width] += 3 / 16 * error_distribute;
 
-        GameObject spriteObject = Instantiate(spritePrefab, transform);
+        GameObject spriteObject = Instantiate(spritePrefab, _spritesParent);
         spriteObject.transform.localPosition = Vector3.right * x + Vector3.down * y;
         spriteObject.GetComponent<SpriteRenderer>().sprite = Tiles[tile_number].sprite;
         
@@ -135,8 +248,19 @@ public class Dither : MonoBehaviour
             {
                 //nothing more to dither, stop dithering
                 _dithering = false;
+
+                if (_lastSpritesParent != null)
+                {
+                    Destroy(_lastSpritesParent.gameObject);
+                    _lastSpritesParent = null;
+                }
             }
         }
+    }
+
+    public int GetZoom()
+    {
+        return zoomLevel;
     }
     
     public static int BinarySearch(CollageTile[] a, float item)

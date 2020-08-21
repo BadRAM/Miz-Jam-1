@@ -75,7 +75,7 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 2
   m_Size: {x: 5, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -307,6 +307,9 @@ MonoBehaviour:
   spriteS: {fileID: 5781856122182332941}
   spriteSE: {fileID: 5781856121010411860}
   spriteCenter: {fileID: 5820049840066646849}
+  BoxIsUpdating: 0
+  startVisible: 1
+  centerVisible: 0
   top: 3
   bottom: -3
   left: -3
