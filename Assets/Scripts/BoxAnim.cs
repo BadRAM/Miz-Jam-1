@@ -12,6 +12,8 @@ public class BoxAnim : MonoBehaviour
     [SerializeField] private StringToSprites enhanceButton;
     [SerializeField] private StringToSprites submitButton;
     [SerializeField] private StringToSprites CensorButton;
+    [SerializeField] private Transform LogoHideBlackBar;
+    [SerializeField] private StringToSprites[] Texts;
     [SerializeField] private float AnimationSpeed = 0.002f;
     [SerializeField] private int BoxTop;
     [SerializeField] private int BoxBottom;
@@ -30,6 +32,7 @@ public class BoxAnim : MonoBehaviour
             box.bottom = BoxBottom + (BoxTop - BoxBottom)/2;
             box.right = 0;
             box.left = 0;
+            box.zLayer = 20;
             StartCoroutine(BoxAnimation(AnimationSpeed));
         }
     }
@@ -55,8 +58,16 @@ public class BoxAnim : MonoBehaviour
     {
         StartAnim = false;
         box.BoxIsUpdating = true;
-        transform.position = new Vector3(transform.position.x, transform.position.y, zLayer);
-
+        while(LogoHideBlackBar.position.y > 2)
+        {
+            yield return new WaitForSeconds(0.1f);
+            LogoHideBlackBar.position = new Vector3(LogoHideBlackBar.position.x, LogoHideBlackBar.position.y -1, LogoHideBlackBar.position.z);
+        }
+        box.zLayer = zLayer;
+        foreach(StringToSprites text in Texts)
+        {
+            text._TextPlay = true;
+        }
         while(box.right != BoxRight)
         {
             yield return new WaitForSeconds(sec);
@@ -107,6 +118,10 @@ public class BoxAnim : MonoBehaviour
     {
         StartReverseAnim = false;
         box.BoxIsUpdating = true;
+        foreach(StringToSprites text in Texts)
+        {
+            text._TextPlayReverse = true;
+        }
         if(Censor != null)
         {
             StartCoroutine(CensorButton.SpritesAnimReverse());
@@ -155,8 +170,13 @@ public class BoxAnim : MonoBehaviour
         }
         box.left = 0;
         
-        transform.position = new Vector3(transform.position.x, transform.position.y, 30);
         
+        while(LogoHideBlackBar.position.y < 12)
+        {
+            yield return new WaitForSeconds(0.1f);
+            LogoHideBlackBar.position = new Vector3(LogoHideBlackBar.position.x, LogoHideBlackBar.position.y + 1, LogoHideBlackBar.position.z);
+        }
+        box.zLayer = zLayer;
         box.UpdateBox();
         box.BoxIsUpdating = false;
         StopCoroutine(BoxAnimationReverse(AnimationSpeed));
