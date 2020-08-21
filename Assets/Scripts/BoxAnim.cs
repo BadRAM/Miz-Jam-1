@@ -51,7 +51,7 @@ public class BoxAnim : MonoBehaviour
     }
 
     // Update is called once per frame
-    IEnumerator BoxAnimation(float sec)
+    public IEnumerator BoxAnimation(float sec)
     {
         StartAnim = false;
         box.BoxIsUpdating = true;
@@ -103,7 +103,7 @@ public class BoxAnim : MonoBehaviour
         }
         StopCoroutine(BoxAnimation(AnimationSpeed));
     }
-    IEnumerator BoxAnimationReverse(float sec)
+    public IEnumerator BoxAnimationReverse(float sec)
     {
         StartReverseAnim = false;
         box.BoxIsUpdating = true;

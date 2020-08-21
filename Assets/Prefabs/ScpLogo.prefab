@@ -681,7 +681,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 389080057966899575}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.93, y: -2.09, z: 0}
+  m_LocalPosition: {x: 1, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7937998484380900211}
@@ -828,6 +828,11 @@ MonoBehaviour:
     sprite: {fileID: 3223945150233868296, guid: e9178df2a2bf3824c878d34450bfe375, type: 3}
   spritePrefab: {fileID: 2283200622640813097, guid: 4d80789592e03ed42b10db56a66216ca, type: 3}
   charWidth: 1
+  Test: 0
+  sprites: []
+  _TextPlay: 0
+  _TextPlayReverse: 0
+  _button: {fileID: 0}
 --- !u!1 &419895858041098011
 GameObject:
   m_ObjectHideFlags: 0
@@ -8397,7 +8402,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4265667674533887913}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.08, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3455918165609578766}
@@ -8545,6 +8550,11 @@ MonoBehaviour:
     sprite: {fileID: 1536156185580594712, guid: e9178df2a2bf3824c878d34450bfe375, type: 3}
   spritePrefab: {fileID: 2283200622640813097, guid: 4d80789592e03ed42b10db56a66216ca, type: 3}
   charWidth: 1
+  Test: 0
+  sprites: []
+  _TextPlay: 0
+  _TextPlayReverse: 0
+  _button: {fileID: 0}
 --- !u!1 &4352244874895666452
 GameObject:
   m_ObjectHideFlags: 0
@@ -8734,7 +8744,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4388450682980303872}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.93, y: -1.05, z: 0}
+  m_LocalPosition: {x: 1, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9134083609120027075}
@@ -8881,6 +8891,11 @@ MonoBehaviour:
     sprite: {fileID: 3223945150233868296, guid: e9178df2a2bf3824c878d34450bfe375, type: 3}
   spritePrefab: {fileID: 2283200622640813097, guid: 4d80789592e03ed42b10db56a66216ca, type: 3}
   charWidth: 1
+  Test: 0
+  sprites: []
+  _TextPlay: 0
+  _TextPlayReverse: 0
+  _button: {fileID: 0}
 --- !u!1 &4605888090826103676
 GameObject:
   m_ObjectHideFlags: 0
@@ -9808,7 +9823,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4922050380592147823}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.93, y: -3.24, z: 0}
+  m_LocalPosition: {x: 1, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5804093010298265836}
@@ -9955,6 +9970,11 @@ MonoBehaviour:
     sprite: {fileID: 3223945150233868296, guid: e9178df2a2bf3824c878d34450bfe375, type: 3}
   spritePrefab: {fileID: 2283200622640813097, guid: 4d80789592e03ed42b10db56a66216ca, type: 3}
   charWidth: 1
+  Test: 0
+  sprites: []
+  _TextPlay: 0
+  _TextPlayReverse: 0
+  _button: {fileID: 0}
 --- !u!1 &4959330825909448236
 GameObject:
   m_ObjectHideFlags: 0
@@ -12030,7 +12050,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5906582715289593360}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.93, y: -5.49, z: 0}
+  m_LocalPosition: {x: 1, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3825641298002594173}
@@ -12173,6 +12193,11 @@ MonoBehaviour:
     sprite: {fileID: 3223945150233868296, guid: e9178df2a2bf3824c878d34450bfe375, type: 3}
   spritePrefab: {fileID: 2283200622640813097, guid: 4d80789592e03ed42b10db56a66216ca, type: 3}
   charWidth: 1
+  Test: 0
+  sprites: []
+  _TextPlay: 0
+  _TextPlayReverse: 0
+  _button: {fileID: 0}
 --- !u!1 &5918975588183250123
 GameObject:
   m_ObjectHideFlags: 0
@@ -12771,7 +12796,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6281646417857099801}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.26, y: 8.85, z: -18.636684}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4538321565964682727}
@@ -13548,7 +13573,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6625982887225645720}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.93, y: -4.39, z: 0}
+  m_LocalPosition: {x: 1, y: -4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1130734975190985700}
@@ -13693,6 +13718,11 @@ MonoBehaviour:
     sprite: {fileID: 3223945150233868296, guid: e9178df2a2bf3824c878d34450bfe375, type: 3}
   spritePrefab: {fileID: 2283200622640813097, guid: 4d80789592e03ed42b10db56a66216ca, type: 3}
   charWidth: 1
+  Test: 0
+  sprites: []
+  _TextPlay: 0
+  _TextPlayReverse: 0
+  _button: {fileID: 0}
 --- !u!1 &6654388632009215782
 GameObject:
   m_ObjectHideFlags: 0
@@ -14456,7 +14486,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6851434350902580050}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.93, y: -7.52, z: 0}
+  m_LocalPosition: {x: 1, y: -7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6921985469796439322}
@@ -14599,6 +14629,11 @@ MonoBehaviour:
     sprite: {fileID: 3223945150233868296, guid: e9178df2a2bf3824c878d34450bfe375, type: 3}
   spritePrefab: {fileID: 2283200622640813097, guid: 4d80789592e03ed42b10db56a66216ca, type: 3}
   charWidth: 1
+  Test: 0
+  sprites: []
+  _TextPlay: 0
+  _TextPlayReverse: 0
+  _button: {fileID: 0}
 --- !u!1 &6932309183254311365
 GameObject:
   m_ObjectHideFlags: 0
@@ -14870,7 +14905,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7163868411279589376}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.93, y: -6.53, z: 0}
+  m_LocalPosition: {x: 1, y: -6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8668508255797853614}
@@ -15013,6 +15048,11 @@ MonoBehaviour:
     sprite: {fileID: 3223945150233868296, guid: e9178df2a2bf3824c878d34450bfe375, type: 3}
   spritePrefab: {fileID: 2283200622640813097, guid: 4d80789592e03ed42b10db56a66216ca, type: 3}
   charWidth: 1
+  Test: 0
+  sprites: []
+  _TextPlay: 0
+  _TextPlayReverse: 0
+  _button: {fileID: 0}
 --- !u!1 &7248236944520277255
 GameObject:
   m_ObjectHideFlags: 0

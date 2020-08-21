@@ -6,5 +6,5 @@ using UnityEngine;
 public class Image : ScriptableObject
 {
     public Texture2D Texture;
-    public Rect[] Hazards;
+    public Vector2[] Hazards;
 }

@@ -12,6 +12,7 @@ public class Game : MonoBehaviour
     [Header("GameScreen Links")]
     [SerializeField] private Transform gameScreen;
     [SerializeField] private GameObject message; // the prefab of the message system which tells you if you failed or succeeded the last image.
+    [SerializeField] private BoxAnim boxAnim;
     
     [SerializeField] private StringToSprites titleText;
 
@@ -39,7 +40,7 @@ public class Game : MonoBehaviour
 
     private void LevelInit()
     {
-        
+        boxAnim.StartAnim = true;
     }
 
     public void Submit()
@@ -73,9 +74,21 @@ public class Game : MonoBehaviour
 
     public void FinishLevel()
     {
+        if (_currentLevel == levels.Length)
+        {
+            FinishGame();
+            return;
+        }
+
+        _currentLevel++;
         
+        LevelInit();
     }
 
-
-
+    public void FinishGame()
+    {
+        mainMenu.gameObject.SetActive(false);
+        gameScreen.gameObject.SetActive(false);
+        credits.gameObject.SetActive(true);
+    }
 }
