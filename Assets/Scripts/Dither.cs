@@ -8,7 +8,6 @@ using UnityEngine;
 public class Dither : MonoBehaviour
 {
     [SerializeField] private Texture2D currentImage;
-    [SerializeField] private Image image;
     [SerializeField] private Texture2D One_Ass;
     [SerializeField] private int width;
     [SerializeField] private int height;
@@ -30,7 +29,11 @@ public class Dither : MonoBehaviour
     private int _midZoomY;
     private Transform _spritesParent;
     private Transform _lastSpritesParent;
-
+    public CensorBox censor;
+    public Texture2D lastinput_image;
+    public int lastposx;
+    public int lastposy;
+    public int lastmipLevel;
 
     [ContextMenu("Bake Tiles")]
     void BakeTiles()
@@ -122,12 +125,6 @@ public class Dither : MonoBehaviour
 
     public void ZoomIn(Vector3 pos)
     {
-        if (_lastSpritesParent != null)
-        {
-            Destroy(_lastSpritesParent.gameObject);
-            _lastSpritesParent = null;
-        }
-        
         if (zoomLevel == 2)
         {
             return;
@@ -140,18 +137,18 @@ public class Dither : MonoBehaviour
         
         if (zoomLevel == 1)
         {
-            posx = (int) (pos.x * (width*2 - 56));
-            posy = (int) (pos.y * (height*2 - 30));
+            posx = (int) (pos.x * (width));
+            posy = (int) (pos.y * (height));
             _midZoomX = posx;
             _midZoomY = posy;
         }
         else //zoomlevel must be 2
         {
-            posx = (int) (pos.x * (width*2 - 56)) + _midZoomX*2;
-            posy = (int) (pos.y * (height*2 - 30)) + _midZoomY*2;
+            posx = (int) (pos.x * (width)) + _midZoomX*2;
+            posy = (int) (pos.y * (height)) + _midZoomY*2;
         }
 
-        Debug.Log( "posx: " + posx + " posy: " + posy);
+        //Debug.Log( "posx: " + posx + " posy: " + posy);
         
         start_dither(currentImage, posx, posy, ZoomToMip());
         
@@ -161,16 +158,16 @@ public class Dither : MonoBehaviour
 
     public void ZoomOut()
     {
+        if (zoomLevel == 0)
+        {
+            return;
+        }
+        
         // catches an edge case if zooming out while zooming in.
         if (_lastSpritesParent != null)
         {
             Destroy(_lastSpritesParent.gameObject);
             _lastSpritesParent = null;
-        }
- 
-        if (zoomLevel == 0)
-        {
-            return;
         }
         
         if (zoomLevel == 2)
@@ -188,8 +185,18 @@ public class Dither : MonoBehaviour
         _lastSpritesParent = null;
     }
 
-    void start_dither(Texture2D input_image, int posx, int posy, int mipLevel)
+    public void start_dither(Texture2D input_image, int posx, int posy, int mipLevel)
     {
+        lastinput_image = input_image;
+        lastposx = posx;
+        lastposy = posy;
+        lastmipLevel = mipLevel;
+                            Debug.Log(lastposy);
+//        foreach (Transform child in transform) {
+//            Destroy(child.gameObject);
+//        }
+
+
         //Code currently assumes that input_image is already WIDTH and HEIGHT pixels large.
         // If not, the pixels[x+y*width] in the for loop will need to be changed
 
@@ -237,7 +244,17 @@ public class Dither : MonoBehaviour
         GameObject spriteObject = Instantiate(spritePrefab, _spritesParent);
         spriteObject.transform.localPosition = Vector3.right * x + Vector3.down * y;
         spriteObject.GetComponent<SpriteRenderer>().sprite = Tiles[tile_number].sprite;
-        
+        if (censor.rectanglesToCensor.Count > 0)
+        {
+            for (int i = 0; i < censor.rectanglesToCensor.Count; i++)
+            {
+                if (censor.rectanglesToCensor[i].Contains(new Vector2((lastposx + x)*Mathf.Pow(2,lastmipLevel) , (lastposy +30-y)*Mathf.Pow(2,lastmipLevel))))
+                {
+
+                    spriteObject.GetComponent<SpriteRenderer>().sprite = Tiles[0].sprite;
+                }
+            }
+        }
         x++;
         if (x >= width)
         {
