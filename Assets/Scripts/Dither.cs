@@ -15,6 +15,7 @@ public class Dither : MonoBehaviour
     [SerializeField] private int maxRendersPerFrame;
     [SerializeField] private List<CollageTile> Tiles;
     [SerializeField] private GameObject spritePrefab;
+    [SerializeField] private bool colour;
     private int x=0;
     private int y=0;
     private float error_distribute;
@@ -185,6 +186,12 @@ public class Dither : MonoBehaviour
         _lastSpritesParent = null;
     }
 
+    public void kill_child()
+    {
+        Destroy(_lastSpritesParent.gameObject);
+        _lastSpritesParent = null;
+    }
+
     public void start_dither(Texture2D input_image, int posx, int posy, int mipLevel)
     {
         lastinput_image = input_image;
@@ -244,6 +251,14 @@ public class Dither : MonoBehaviour
         GameObject spriteObject = Instantiate(spritePrefab, _spritesParent);
         spriteObject.transform.localPosition = Vector3.right * x + Vector3.down * y;
         spriteObject.GetComponent<SpriteRenderer>().sprite = Tiles[tile_number].sprite;
+        
+        //colour
+
+        if (colour)
+        {
+            spriteObject.GetComponent<SpriteRenderer>().color = pixel / pixel.maxColorComponent;
+        }
+        
         if (censor.rectanglesToCensor.Count > 0)
         {
             for (int i = 0; i < censor.rectanglesToCensor.Count; i++)
