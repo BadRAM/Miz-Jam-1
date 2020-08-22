@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3f1c769530e94f4fa1eb5f3a065cbd0, type: 3}
   m_Name: hydrant5
   m_EditorClassIdentifier: 
-  Texture: {fileID: 0}
-  Hazards: []
+  Texture: {fileID: 2800000, guid: 72840d3dbbb23b84ab6d00239b90cb8f, type: 3}
+  Hazards:
+  - {x: 160, y: 36}
+  - {x: 159, y: 126}
