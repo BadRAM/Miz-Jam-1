@@ -9193,7 +9193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f14516875ded9524ca8ab05e7efe1588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentImage: {fileID: 2800000, guid: 1b2797d9d590e5b4ea04fb125a94cdee, type: 3}
+  currentImage: {fileID: 2800000, guid: 94da3dc7d29305942b72ac8377670f1d, type: 3}
   One_Ass: {fileID: 2800000, guid: e9178df2a2bf3824c878d34450bfe375, type: 3}
   width: 56
   height: 30
