@@ -18,7 +18,7 @@ public class test : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            testbox.activateMessage("Hello There", "goodBye");
+            testbox.activateMessage();
         }
     }
 }

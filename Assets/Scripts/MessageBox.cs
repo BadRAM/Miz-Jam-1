@@ -10,6 +10,10 @@ public class MessageBox : Box
     [SerializeField] private Transform StartPos;
     [SerializeField] private Transform EndPos;
 
+    [SerializeField] AudioSource goodFeedback;
+    [SerializeField] AudioSource badFeedback;
+    [SerializeField] AudioSource neutralFeedback;
+
     [SerializeField] private float Delay;
     [SerializeField] private float Delay2;
     public float duration = 0.5f;
@@ -61,12 +65,35 @@ public class MessageBox : Box
         transform.position = new Vector3((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
     }
 
-    public void activateMessage(string Line1, string Line2="")
+    public void activateMessage()
     {
-        string2.updateSprites(Line1);
-        string3.updateSprites(Line2);
+        determineSFX(0);
+        string2.updateSprites("this is line one");
+        string3.updateSprites("this is line two");
         gameObject.SetActive(true);
         startTime = Time.time;
         journeyLength = Vector3.Distance(StartPos.position, EndPos.position);
+    }
+
+    private void determineSFX(int i)
+    {
+        if(i == 0)
+        {
+            goodFeedback.Play();
+        }
+        else if(i == 1)
+        {
+            badFeedback.Play();
+        }
+        else
+        {
+            neutralFeedback.Play();
+        }
+
+    }
+
+    public void hithere()
+    {
+        activateMessage();
     }
 }

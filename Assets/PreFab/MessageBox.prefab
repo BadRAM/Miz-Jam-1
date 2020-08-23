@@ -1990,8 +1990,12 @@ MonoBehaviour:
   zLayer: -5
   string1: {fileID: 7971888318539744244}
   string2: {fileID: 7971888319109188059}
+  string3: {fileID: 0}
   StartPos: {fileID: 0}
   EndPos: {fileID: 0}
+  goodFeedback: {fileID: 0}
+  badFeedback: {fileID: 0}
+  neutralFeedback: {fileID: 0}
   Delay: 0
   Delay2: 0
   duration: 1
