@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed7d37d5a87ee84587a9c3b0a02efb6, type: 3}
+  m_Name: stop_signs
+  m_EditorClassIdentifier: 
+  Briefing: censor stop signs
+  ClueLimit: 3
+  Images:
+  - {fileID: 11400000, guid: 7ca113ad99f7fbc4491482f5a8f45d89, type: 2}
+  - {fileID: 11400000, guid: 76962b531643fff4b8ab8ce3dcb0d0b3, type: 2}
+  - {fileID: 11400000, guid: c84de2800567cb540a30a8cf0196e1a4, type: 2}
+  - {fileID: 11400000, guid: 0002d4feb552be54986cf674e046f43a, type: 2}
+  - {fileID: 11400000, guid: 3d6a0cf1d1c9bb1478c62fe7147fd5a1, type: 2}
+  - {fileID: 11400000, guid: 8dd40cd6b17467044b55e1b8e5186206, type: 2}
+  MusicIntro: {fileID: 0}
+  MusicLoop: {fileID: 0}

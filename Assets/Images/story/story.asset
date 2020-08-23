@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed7d37d5a87ee84587a9c3b0a02efb6, type: 3}
+  m_Name: story
+  m_EditorClassIdentifier: 
+  Briefing: censor them before they find you
+  ClueLimit: 5
+  Images:
+  - {fileID: 11400000, guid: b0db73e1fa6d59643a6319d0f62e9242, type: 2}
+  - {fileID: 11400000, guid: f1e8e3a4dd69f8d49b5a4bb63ad41efa, type: 2}
+  - {fileID: 11400000, guid: 6127178253527c248ae3ba4a23c6cc94, type: 2}
+  - {fileID: 11400000, guid: 88ccd85089611ab48978f1db7b8bf298, type: 2}
+  - {fileID: 11400000, guid: 857cd23dafd7fec4f971a6ffbeca0cf0, type: 2}
+  MusicIntro: {fileID: 0}
+  MusicLoop: {fileID: 0}
