@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed7d37d5a87ee84587a9c3b0a02efb6, type: 3}
+  m_Name: outlets
+  m_EditorClassIdentifier: 
+  Briefing: censor power outlets
+  ClueLimit: 3
+  Images:
+  - {fileID: 11400000, guid: 59d2ef59df34bce459918848257e033f, type: 2}
+  - {fileID: 11400000, guid: 102da67530ea0344ab2095f7256b259a, type: 2}
+  - {fileID: 11400000, guid: b74b88285c49cec47a238e21eae28e34, type: 2}
+  - {fileID: 11400000, guid: e480a740a27f741448a861923ef23147, type: 2}
+  - {fileID: 11400000, guid: 18c2b50d75193fb4d8a521596042f838, type: 2}
+  - {fileID: 11400000, guid: 94be234800a43d14ba2944dc32721497, type: 2}
+  MusicIntro: {fileID: 0}
+  MusicLoop: {fileID: 0}
