@@ -24,7 +24,7 @@ public class Box : MonoBehaviour
     public int left;
     public int right;
 
-    [SerializeField] private float zLayer;
+    public float zLayer;
 
     void Start()
     {

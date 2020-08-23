@@ -12,6 +12,10 @@ public class BoxAnim : MonoBehaviour
     [SerializeField] private StringToSprites enhanceButton;
     [SerializeField] private StringToSprites submitButton;
     [SerializeField] private StringToSprites CensorButton;
+    [SerializeField] private Box topBlackBox;
+    [SerializeField] private Box bottomBlackBox;
+    //[SerializeField] private Transform LogoHideBlackBar;
+    [SerializeField] private StringToSprites[] Texts;
     [SerializeField] private float AnimationSpeed = 0.002f;
     [SerializeField] private int BoxTop;
     [SerializeField] private int BoxBottom;
@@ -27,9 +31,14 @@ public class BoxAnim : MonoBehaviour
         if(box != null)
         {
             box.top = BoxTop - (BoxTop - BoxBottom)/2;
+            topBlackBox.bottom = box.top;
+            topBlackBox.UpdateBox();
             box.bottom = BoxBottom + (BoxTop - BoxBottom)/2;
+            bottomBlackBox.top = box.bottom;
+            bottomBlackBox.UpdateBox();
             box.right = 0;
             box.left = 0;
+            box.zLayer = 20;
             StartCoroutine(BoxAnimation(AnimationSpeed));
         }
     }
@@ -55,8 +64,11 @@ public class BoxAnim : MonoBehaviour
     {
         StartAnim = false;
         box.BoxIsUpdating = true;
-        transform.position = new Vector3(transform.position.x, transform.position.y, zLayer);
-
+        box.zLayer = zLayer;
+        foreach(StringToSprites text in Texts)
+        {
+            text._TextPlay = true;
+        }
         while(box.right != BoxRight)
         {
             yield return new WaitForSeconds(sec);
@@ -67,12 +79,18 @@ public class BoxAnim : MonoBehaviour
         
         while(box.top != BoxTop)
         {
-            yield return new WaitForSeconds(sec);
+            yield return new WaitForSeconds(sec*2);
             box.top++;
             box.bottom--;
+            topBlackBox.bottom = box.top;
+            topBlackBox.UpdateBox();
+            bottomBlackBox.top = box.bottom;
+            bottomBlackBox.UpdateBox();
         }
         box.bottom = BoxBottom;
-        
+        bottomBlackBox.top = box.bottom;
+        bottomBlackBox.UpdateBox();
+
         box.UpdateBox();
         box.BoxIsUpdating = false;
         yield return new WaitForSeconds(sec);
@@ -107,6 +125,10 @@ public class BoxAnim : MonoBehaviour
     {
         StartReverseAnim = false;
         box.BoxIsUpdating = true;
+        foreach(StringToSprites text in Texts)
+        {
+            text._TextPlayReverse = true;
+        }
         if(Censor != null)
         {
             StartCoroutine(CensorButton.SpritesAnimReverse());
@@ -139,13 +161,19 @@ public class BoxAnim : MonoBehaviour
         {
             dither.SetActive(false);
         }
-        while(box.top != 0)
+        while(box.top != BoxTop - (BoxTop - BoxBottom)/2)
         {
-            yield return new WaitForSeconds(sec);
+            yield return new WaitForSeconds(sec * 2);
             box.top--;
             box.bottom++;
+            topBlackBox.bottom = box.top;
+            topBlackBox.UpdateBox();
+            bottomBlackBox.top = box.bottom;
+            bottomBlackBox.UpdateBox();
         }
-        box.bottom = 0;
+        box.bottom = BoxBottom + (BoxTop - BoxBottom)/2;
+        bottomBlackBox.top = box.bottom;
+        bottomBlackBox.UpdateBox();
         
         while(box.right != 0)
         {
@@ -155,8 +183,7 @@ public class BoxAnim : MonoBehaviour
         }
         box.left = 0;
         
-        transform.position = new Vector3(transform.position.x, transform.position.y, 30);
-        
+        box.zLayer = zLayer;
         box.UpdateBox();
         box.BoxIsUpdating = false;
         StopCoroutine(BoxAnimationReverse(AnimationSpeed));

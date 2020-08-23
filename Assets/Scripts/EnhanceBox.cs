@@ -94,7 +94,7 @@ public class EnhanceBox : MonoBehaviour
 
     public void Activate()
     {
-        if (_zoomLevel == 2)
+        if (_zoomLevel == 3)
         {
             return;
         }

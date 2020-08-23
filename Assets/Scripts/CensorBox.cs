@@ -9,7 +9,7 @@ public class CensorBox : MonoBehaviour
     private bool _active; // starts true, is set to false once placed and static.
     private bool _held; // 
     private bool _censoring;
-    private Box _box;
+    [SerializeField] private Box _box;
     [SerializeField] private float corner_x = -28;
     [SerializeField] private float corner_y = -17;
 
@@ -26,6 +26,9 @@ public class CensorBox : MonoBehaviour
     void Start()
     {
         _camera = Camera.main;
+        
+        _box.SetVisible(false);
+        _box.UpdateBox();
     }
     
     void Render()
@@ -75,6 +78,10 @@ public class CensorBox : MonoBehaviour
             Vector3 pos = _camera.ScreenToWorldPoint(Input.mousePosition);
             if (_held)
             {
+                _box.bottom = (int)pos.y;
+                _box.left = (int)pos.x;
+                _box.UpdateBox();
+
                 if (Input.GetMouseButtonUp(0))
                 {
                     endX = (pos.x - corner_x + dither.lastposx) * Mathf.Pow(2 , dither.lastmipLevel) ;
@@ -84,6 +91,9 @@ public class CensorBox : MonoBehaviour
                     rectanglesToCensor.Add(rectangle(startX, startY, endX, endY));
                     Debug.Log( startX +" "+ startY +" "+ endX +" "+ endY);
                     dither.start_dither(dither.lastinput_image, dither.lastposx, dither.lastposy, dither.lastmipLevel);
+                    dither.kill_child();
+
+                    _box.SetVisible(false);
                 }
             }
             else
@@ -93,6 +103,13 @@ public class CensorBox : MonoBehaviour
                     startX = (pos.x - corner_x + dither.lastposx) * Mathf.Pow(2 , dither.lastmipLevel) ;
                     startY = (pos.y  - corner_y + dither.lastposy) * Mathf.Pow(2 , dither.lastmipLevel) ;
                     _held = true;
+                    
+                    _box.top = (int)pos.y;
+                    _box.right = (int)pos.x;
+                    _box.bottom = (int)pos.y;
+                    _box.left = (int)pos.x;
+                    _box.UpdateBox();
+                    _box.SetVisible(true);
                 }
             }
             endX = pos.x;

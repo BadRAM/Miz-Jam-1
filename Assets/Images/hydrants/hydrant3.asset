@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3f1c769530e94f4fa1eb5f3a065cbd0, type: 3}
-  m_Name: Image0
+  m_Name: hydrant3
   m_EditorClassIdentifier: 
-  Texture: {fileID: 2800000, guid: 94da3dc7d29305942b72ac8377670f1d, type: 3}
+  Texture: {fileID: 2800000, guid: 6a065181037b1a246b3c46c1df3952c5, type: 3}
   Hazards:
-  - {x: 112, y: 70}
+  - {x: 381, y: 49}
+  - {x: 380, y: 89}

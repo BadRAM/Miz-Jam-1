@@ -15,6 +15,7 @@ public class Dither : MonoBehaviour
     [SerializeField] private int maxRendersPerFrame;
     [SerializeField] private List<CollageTile> Tiles;
     [SerializeField] private GameObject spritePrefab;
+    [SerializeField] private bool colour;
     private int x=0;
     private int y=0;
     private float error_distribute;
@@ -27,6 +28,8 @@ public class Dither : MonoBehaviour
     private int zoomLevel;
     private int _midZoomX;
     private int _midZoomY;
+    private int _closeZoomX;
+    private int _closeZoomY;
     private Transform _spritesParent;
     private Transform _lastSpritesParent;
     public CensorBox censor;
@@ -105,6 +108,8 @@ public class Dither : MonoBehaviour
                 return 2;
             case 2:
                 return 4;
+            case 3:
+                return 8;
         }
         return 1;
     }
@@ -114,18 +119,20 @@ public class Dither : MonoBehaviour
         switch (zoomLevel)
         {
             case 0:
-                return 2;
+                return 3;
             case 1:
-                return 1;
+                return 2;
             case 2:
+                return 1;
+            case 3:
                 return 0;
         }
-        return 2;
+        return 3;
     }
 
     public void ZoomIn(Vector3 pos)
     {
-        if (zoomLevel == 2)
+        if (zoomLevel == 3)
         {
             return;
         }
@@ -142,10 +149,17 @@ public class Dither : MonoBehaviour
             _midZoomX = posx;
             _midZoomY = posy;
         }
-        else //zoomlevel must be 2
+        else if(zoomLevel ==2)
         {
             posx = (int) (pos.x * (width)) + _midZoomX*2;
             posy = (int) (pos.y * (height)) + _midZoomY*2;
+            _closeZoomX = posx;
+            _closeZoomY = posy;
+        }
+        else
+        {
+            posx = (int) (pos.x * (width))  + _closeZoomX*2;
+            posy = (int) (pos.y * (height)) + _closeZoomY*2;
         }
 
         //Debug.Log( "posx: " + posx + " posy: " + posy);
@@ -169,18 +183,28 @@ public class Dither : MonoBehaviour
             Destroy(_lastSpritesParent.gameObject);
             _lastSpritesParent = null;
         }
-        
-        if (zoomLevel == 2)
+        if(zoomLevel == 3)
+        {
+            zoomLevel =2;
+            start_dither(currentImage, _closeZoomX, _closeZoomY,ZoomToMip());           
+        }
+        else if (zoomLevel == 2)
         {
             zoomLevel = 1;
-            start_dither(currentImage, _midZoomX, _midZoomY, 1);
+            start_dither(currentImage, _midZoomX, _midZoomY, ZoomToMip());
         }
         else
         {
             zoomLevel = 0;
-            start_dither(currentImage, 0, 0, 2);
+            start_dither(currentImage, 0, 0, ZoomToMip());
         }
         
+        Destroy(_lastSpritesParent.gameObject);
+        _lastSpritesParent = null;
+    }
+
+    public void kill_child()
+    {
         Destroy(_lastSpritesParent.gameObject);
         _lastSpritesParent = null;
     }
@@ -244,6 +268,14 @@ public class Dither : MonoBehaviour
         GameObject spriteObject = Instantiate(spritePrefab, _spritesParent);
         spriteObject.transform.localPosition = Vector3.right * x + Vector3.down * y;
         spriteObject.GetComponent<SpriteRenderer>().sprite = Tiles[tile_number].sprite;
+        
+        //colour
+
+        if (colour)
+        {
+            spriteObject.GetComponent<SpriteRenderer>().color = pixel / pixel.maxColorComponent;
+        }
+        
         if (censor.rectanglesToCensor.Count > 0)
         {
             for (int i = 0; i < censor.rectanglesToCensor.Count; i++)
