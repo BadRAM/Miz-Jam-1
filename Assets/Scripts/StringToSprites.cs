@@ -17,7 +17,7 @@ public class StringToSprites : MonoBehaviour
     public bool _TextPlay;
     public bool _StartWithNoText = false;
     public bool _TextPlayReverse = false;
-    public Button _button;
+    //public Button _button;
 
     void Start()
     {
@@ -94,21 +94,8 @@ public class StringToSprites : MonoBehaviour
 
     public void updateSprites(string updatedMessage)
     {
-        Dictionary<char, Sprite> charSpriteDict = initiateDict();
-        deleteChildren();
-        updatedMessage = updatedMessage.ToUpper();
-
-        Vector3 cursorPos = new Vector3();
-        foreach(char character in updatedMessage)
-        {
-            GameObject spriteObject = Instantiate(spritePrefab, transform);
-            spriteObject.transform.localPosition = cursorPos;
-            if (charSpriteDict.ContainsKey(character))
-            {
-                  spriteObject.GetComponent<SpriteRenderer>().sprite = charSpriteDict[character];
-            }
-            cursorPos += Vector3.right * charWidth;
-        }
+        textToConvert = updatedMessage;
+        CreateSprites();
     }
 
     public IEnumerator SpritesAnim()
@@ -127,17 +114,6 @@ public class StringToSprites : MonoBehaviour
             if (charSpriteDict.ContainsKey(character))
             {
                 spriteObject.GetComponent<SpriteRenderer>().sprite = charSpriteDict[character];
-                if(_button != null)
-                {
-                    _button.Sprites.Add(spriteObject.GetComponent<SpriteRenderer>());
-                    for(var i = _button.Sprites.Count - 1; i >  -1; --i)
-                    {
-                        if(_button.Sprites[i] == null)
-                        {
-                            _button.Sprites.RemoveAt(i);
-                        }
-                    }
-                }
             }
             cursorPos += Vector3.right * charWidth;
         }

@@ -2381,7 +2381,7 @@ MonoBehaviour:
   badFeedback: {fileID: 4504048318526165284}
   neutralFeedback: {fileID: 5092930224979253264}
   Delay: 0
-  Delay2: 0
+  persist: 0
   duration: 1
 --- !u!1 &8326386248147202327
 GameObject:

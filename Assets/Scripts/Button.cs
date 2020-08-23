@@ -1,4 +1,5 @@
-﻿using UnityEngine.Events;
+﻿using System;
+using UnityEngine.Events;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
@@ -6,25 +7,44 @@ using UnityEngine;
 
 public class Button : MonoBehaviour
 {
-    [SerializeField] private int IndexOfNextScene;
-    [SerializeField] private AudioClip _ButtonIsHoveredOver;
-    [SerializeField] private AudioClip _ButtonIsPressed;
-    [SerializeField] private AudioSource _AS;
+    [SerializeField] private Color hover = Color.gray;
+    [SerializeField] private Color press = Color.red;
+    [SerializeField] private bool checkbox;
 
     public UnityEvent Clicked;
     public List<SpriteRenderer> Sprites = new List<SpriteRenderer>();
-    
+
+    public bool checkboxState;
+
+    private void Start()
+    {
+        foreach(SpriteRenderer Sprite in Sprites)
+        {
+            if (checkbox)
+            {
+                if (checkboxState)
+                {
+                    Sprite.color = Color.white;
+                }
+                else
+                {
+                    Sprite.color = press;
+                }
+            }
+            else
+            {
+                Sprite.color = Color.white;
+            }
+        }
+    }
+
     private void OnMouseEnter() 
     {
         foreach(SpriteRenderer Sprite in Sprites)
         {
             if(Sprites != null)
             {
-                Sprite.color = Color.grey;
-                if(_AS != null)
-                {
-                    _AS.PlayOneShot(_ButtonIsHoveredOver);
-                }
+                Sprite.color = hover;
             }
         }
     }
@@ -33,35 +53,46 @@ public class Button : MonoBehaviour
     {
         foreach(SpriteRenderer Sprite in Sprites)
         {
-            Sprite.color = Color.white;
+            if (checkbox)
+            {
+                if (checkboxState)
+                {
+                    Sprite.color = Color.white;
+                }
+                else
+                {
+                    Sprite.color = press;
+                }
+            }
+            else
+            {
+                Sprite.color = Color.white;
+            }
         }
     }
     private void OnMouseDown()
     {
         foreach(SpriteRenderer Sprite in Sprites)
         {
-            Sprite.color = Color.red;
-            if(_AS != null)
-            {
-                _AS.PlayOneShot(_ButtonIsPressed);
-            }
+            Sprite.color = press;
+
         }
         Clicked.Invoke();
+
+        if (checkbox)
+        {
+            checkboxState = !checkboxState;
+        }
     }
 
     private void OnMouseUp() 
     {        
         foreach(SpriteRenderer Sprite in Sprites)
         {
-            Sprite.color = Color.grey;
+            Sprite.color = hover;
         }
     }
-
-    public void LoadGame()
-    {
-        SceneManager.LoadScene(IndexOfNextScene);
-    }
-
+    
     public void QuitGame()
     {
         Application.Quit();

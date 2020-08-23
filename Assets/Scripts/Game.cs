@@ -16,11 +16,16 @@ public class Game : MonoBehaviour
     [SerializeField] private BoxAnim boxAnim;
     
     [SerializeField] private StringToSprites titleText;
+    [SerializeField] private StringToSprites note;
 
+    [SerializeField] private AudioSource submitSound;
+
+    [SerializeField] private Level menuMusicLevel;
     [SerializeField] private Level[] levels;
     private int _currentLevel;
     private int _currentImage;
     private int _clues;
+    private MusicMan _musicMan;
     [SerializeField] private Dither dither;
 
     private void Start()
@@ -28,6 +33,9 @@ public class Game : MonoBehaviour
         mainMenu.gameObject.SetActive(true);
         gameScreen.gameObject.SetActive(false);
         credits.gameObject.SetActive(false);
+
+        _musicMan = GetComponentInChildren<MusicMan>();
+        _musicMan.UpdateLevel(menuMusicLevel);
     }
 
     public void BeginGame()
@@ -44,12 +52,23 @@ public class Game : MonoBehaviour
     private void LevelInit()
     {
         boxAnim.StartAnim = true;
+        note.deleteChildren();
+        note.TextToConvert = levels[_currentLevel].Note;
+        note.CreateSprites();
+        
+        _musicMan.UpdateLevel(levels[_currentLevel]);
+
+
+        _clues = 0;
         _currentImage = 0;
         dither.currentImage = levels[_currentLevel].Images[_currentImage];
+        dither.restart_dither();
+        dither.censor.rectanglesToCensor.RemoveRange(0, dither.censor.rectanglesToCensor.Count);
     }
 
     public void Submit()
     {
+        submitSound.Play();
         bool imageCheck = true; // is true if all hazards censored.
         bool pointCheck;
         foreach (Vector2 i in dither.currentImage.Hazards)
@@ -79,7 +98,10 @@ public class Game : MonoBehaviour
             }
 
             int successLevel = 1;
-            if (Random.value < area / 107520) // if the submitted image didn't censor too much of the rest of the image.
+            float rand = Random.value;
+            
+            Debug.Log("comparing " + rand + " to " + area / 107520);
+            if (Random.value > area / 107520) // if the submitted image didn't censor too much of the rest of the image.
             {
                 _clues++;
                 successLevel = 2;

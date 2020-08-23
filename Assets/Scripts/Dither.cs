@@ -16,6 +16,7 @@ public class Dither : MonoBehaviour
     [SerializeField] private List<CollageTile> Tiles;
     [SerializeField] private GameObject spritePrefab;
     [SerializeField] private bool colour;
+    [SerializeField] private AudioSource redrawSound;
     private int x=0;
     private int y=0;
     private float error_distribute;
@@ -37,40 +38,51 @@ public class Dither : MonoBehaviour
     public int lastposx;
     public int lastposy;
     public int lastmipLevel;
+    private float graycolor;
+    private float graydivisor;
+    [SerializeField] private float redWeight;
+    [SerializeField] private float greenWeight;
+    [SerializeField] private float blueWeight;
+    private bool ured = true;
+    private bool ugreen = true;
+    private bool ublue = true;
+    [SerializeField] private Button redTogggle;
+    [SerializeField] private Button greenToggle;
+    [SerializeField] private Button blueToggle;
 
-    [ContextMenu("Bake Tiles")]
-    void BakeTiles()
-    {
-        Debug.Log("Baking Tiles...");
-    
-        Tiles = new List<CollageTile>();
-
-        string spriteSheet = AssetDatabase.GetAssetPath(One_Ass);
-        Sprite[] sprites = AssetDatabase.LoadAllAssetsAtPath(spriteSheet)
-            .OfType<Sprite>().ToArray();
-
-        foreach (Sprite s in sprites)
-        {
-            Debug.Log("Baked a tile... Delicious!");
-            int count = 0;
-            float brightness = 0;
-            Rect rect = s.textureRect;
-            foreach (Color p in s.texture.GetPixels((int)rect.x, (int)rect.y, (int)rect.width, (int)rect.height, 0))
-            {
-                brightness += p.grayscale;
-                count++;
-            }
-            brightness = brightness / count;
-            
-            Tiles.Add(new CollageTile(brightness, s));
-        }
-        
-        Debug.Log("Sorting cookies");
-        
-        Tiles.Sort();
-        
-        Debug.Log("DING!");
-    }
+//    [ContextMenu("Bake Tiles")]
+//    void BakeTiles()
+//    {
+//        Debug.Log("Baking Tiles...");
+//    
+//        Tiles = new List<CollageTile>();
+//
+//        string spriteSheet = AssetDatabase.GetAssetPath(One_Ass);
+//        Sprite[] sprites = AssetDatabase.LoadAllAssetsAtPath(spriteSheet)
+//            .OfType<Sprite>().ToArray();
+//
+//        foreach (Sprite s in sprites)
+//        {
+//            Debug.Log("Baked a tile... Delicious!");
+//            int count = 0;
+//            float brightness = 0;
+//            Rect rect = s.textureRect;
+//            foreach (Color p in s.texture.GetPixels((int)rect.x, (int)rect.y, (int)rect.width, (int)rect.height, 0))
+//            {
+//                brightness += p.grayscale;
+//                count++;
+//            }
+//            brightness = brightness / count;
+//            
+//            Tiles.Add(new CollageTile(brightness, s));
+//        }
+//        
+//        Debug.Log("Sorting cookies");
+//        
+//        Tiles.Sort();
+//        
+//        Debug.Log("DING!");
+//    }
 
     // Start is called before the first frame update
     void Start()
@@ -90,6 +102,10 @@ public class Dither : MonoBehaviour
             _ditherCount++;
             renderCount++;
         }
+
+        ured = redTogggle.checkboxState;
+        ugreen = greenToggle.checkboxState;
+        ublue = blueToggle.checkboxState;
     }
 
     int threshold(float pixel_value)
@@ -132,6 +148,8 @@ public class Dither : MonoBehaviour
 
     public void ZoomIn(Vector3 pos)
     {
+        kill_child();
+        
         if (zoomLevel == 3)
         {
             return;
@@ -178,11 +196,8 @@ public class Dither : MonoBehaviour
         }
         
         // catches an edge case if zooming out while zooming in.
-        if (_lastSpritesParent != null)
-        {
-            Destroy(_lastSpritesParent.gameObject);
-            _lastSpritesParent = null;
-        }
+        kill_child();
+        
         if(zoomLevel == 3)
         {
             zoomLevel =2;
@@ -199,14 +214,16 @@ public class Dither : MonoBehaviour
             start_dither(currentImage.Texture, 0, 0, ZoomToMip());
         }
         
-        Destroy(_lastSpritesParent.gameObject);
-        _lastSpritesParent = null;
+        kill_child();
     }
 
     public void kill_child()
     {
-        Destroy(_lastSpritesParent.gameObject);
-        _lastSpritesParent = null;
+        if (_lastSpritesParent != null)
+        {
+            Destroy(_lastSpritesParent.gameObject);
+            _lastSpritesParent = null;
+        }
     }
 
     public void start_dither(Texture2D input_image, int posx, int posy, int mipLevel)
@@ -219,6 +236,10 @@ public class Dither : MonoBehaviour
 //            Destroy(child.gameObject);
 //        }
 
+        if (!redrawSound.isPlaying)
+        {
+            redrawSound.Play();
+        }
 
         //Code currently assumes that input_image is already WIDTH and HEIGHT pixels large.
         // If not, the pixels[x+y*width] in the for loop will need to be changed
@@ -241,8 +262,16 @@ public class Dither : MonoBehaviour
         
     }
 
+    public void reDither()
+    {
+        kill_child();
+        start_dither(lastinput_image, lastposx, lastposy, lastmipLevel);
+        kill_child();
+    }
+
     public void restart_dither()
     {
+        Debug.Log("ured = " + ured + "ugreen = " + ugreen + " ublue = " + ublue);
         zoomLevel = 0;
         _midZoomY = 0;
         _midZoomX = 0;
@@ -256,11 +285,34 @@ public class Dither : MonoBehaviour
     {
         Color pixel = pixels[x + (height - (y + 1)) * width];
 
-        pixel_error[x + y * width] += pixel.grayscale;
+        graycolor = 0;
+        graydivisor = 0;
+        if(ured)
+        {
+            graycolor += pixel.r * redWeight;
+            graydivisor += redWeight;
+        }
+        if(ugreen)
+        {
+            graycolor += pixel.g * greenWeight;
+            graydivisor += greenWeight;
+        }
+        if(ublue)
+        {
+            graycolor += pixel.b * blueWeight;
+            graydivisor += blueWeight;
+        }
 
-        int tile_number = threshold(pixel.grayscale);
+        if(graydivisor ==0)
+        {
+            graydivisor=1;
+        }
+        
+        pixel_error[x + y * width] += graycolor/graydivisor;
+        
+        int tile_number = threshold(graycolor/graydivisor);
 
-        error_distribute = pixel.grayscale - Tiles[tile_number].brightness;
+        error_distribute = (graycolor/graydivisor) - Tiles[tile_number].brightness;
 
         if (x < width - 1)
             pixel_error[x + 1 + y * width] += 7 / 16 * error_distribute;
@@ -306,6 +358,7 @@ public class Dither : MonoBehaviour
             {
                 //nothing more to dither, stop dithering
                 _dithering = false;
+                redrawSound.Stop();
 
                 if (_lastSpritesParent != null)
                 {

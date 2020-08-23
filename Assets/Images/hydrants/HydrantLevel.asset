@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HydrantLevel
   m_EditorClassIdentifier: 
   Briefing: 
-  Note: '- Fire Hydrants'
+  Note: Fire Hydrants
   ClueLimit: 4
   Images:
   - {fileID: 11400000, guid: 8575dcde3295e534a88d428ae1dff70a, type: 2}
@@ -23,4 +23,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6be4544886814014e97d5dd75d8e34ba, type: 2}
   - {fileID: 11400000, guid: a6f56cba3eb563442aa0059656c52a83, type: 2}
   MusicIntro: {fileID: 0}
-  MusicLoop: {fileID: 0}
+  MusicLoop: {fileID: 8300000, guid: 356e48d1c61fc9645b8453b574d87fdf, type: 3}

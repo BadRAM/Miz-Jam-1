@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: stop_signs
   m_EditorClassIdentifier: 
   Briefing: censor stop signs
+  Note: Stop Signs
   ClueLimit: 3
   Images:
   - {fileID: 11400000, guid: 7ca113ad99f7fbc4491482f5a8f45d89, type: 2}
@@ -21,5 +22,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0002d4feb552be54986cf674e046f43a, type: 2}
   - {fileID: 11400000, guid: 3d6a0cf1d1c9bb1478c62fe7147fd5a1, type: 2}
   - {fileID: 11400000, guid: 8dd40cd6b17467044b55e1b8e5186206, type: 2}
-  MusicIntro: {fileID: 0}
-  MusicLoop: {fileID: 0}
+  MusicIntro: {fileID: 8300000, guid: 7c199af89e70da24c87a2dce396c3ba2, type: 3}
+  MusicLoop: {fileID: 8300000, guid: 7bca887675eb98045aee1f715d20f97f, type: 3}

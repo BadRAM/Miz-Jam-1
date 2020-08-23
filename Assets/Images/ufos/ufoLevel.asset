@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed7d37d5a87ee84587a9c3b0a02efb6, type: 3}
+  m_Name: ufoLevel
+  m_EditorClassIdentifier: 
+  Briefing: censor ufos
+  Note: Flying Saucers
+  ClueLimit: 3
+  Images:
+  - {fileID: 11400000, guid: 16d55715ed6d3c744b0045b3d01b3379, type: 2}
+  - {fileID: 11400000, guid: 535c12c2a5c69b34abbb851698dcf430, type: 2}
+  - {fileID: 11400000, guid: e717850c7785c644db8be2cd19628a46, type: 2}
+  - {fileID: 11400000, guid: 07b929c81ce4b5644bb8477929378f5a, type: 2}
+  - {fileID: 11400000, guid: 7c6152253d40d7442b2832c026637363, type: 2}
+  - {fileID: 11400000, guid: 14cba3e931ccb4f4881335d482d7efdb, type: 2}
+  MusicIntro: {fileID: 0}
+  MusicLoop: {fileID: 8300000, guid: f8f0dede02ddfd24bbcd9cacd4c26a7c, type: 3}

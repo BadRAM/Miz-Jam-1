@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: story
   m_EditorClassIdentifier: 
   Briefing: censor them before they find you
+  Note: Them
   ClueLimit: 5
   Images:
   - {fileID: 11400000, guid: b0db73e1fa6d59643a6319d0f62e9242, type: 2}
@@ -20,5 +21,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6127178253527c248ae3ba4a23c6cc94, type: 2}
   - {fileID: 11400000, guid: 88ccd85089611ab48978f1db7b8bf298, type: 2}
   - {fileID: 11400000, guid: 857cd23dafd7fec4f971a6ffbeca0cf0, type: 2}
-  MusicIntro: {fileID: 0}
-  MusicLoop: {fileID: 0}
+  MusicIntro: {fileID: 8300000, guid: 18431b01e3c30a544af940b0f5330882, type: 3}
+  MusicLoop: {fileID: 8300000, guid: 816fe8fdcdca155468c88cfe78bca9c0, type: 3}
