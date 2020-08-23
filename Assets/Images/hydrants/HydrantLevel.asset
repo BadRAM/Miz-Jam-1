@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Briefing: 
   Note: '- Fire Hydrants'
-  ClueLimit: 0
+  ClueLimit: 4
   Images:
   - {fileID: 11400000, guid: 8575dcde3295e534a88d428ae1dff70a, type: 2}
   - {fileID: 11400000, guid: b8464f594913e0b46be1b967f06717bd, type: 2}

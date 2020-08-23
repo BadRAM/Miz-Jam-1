@@ -89,7 +89,7 @@ public class CensorBox : MonoBehaviour
                     _held = false;
                     _censoring = false;
                     rectanglesToCensor.Add(rectangle(startX, startY, endX, endY));
-                    Debug.Log( startX +" "+ startY +" "+ endX +" "+ endY);
+                    //Debug.Log( startX +" "+ startY +" "+ endX +" "+ endY);
                     dither.start_dither(dither.lastinput_image, dither.lastposx, dither.lastposy, dither.lastmipLevel);
                     dither.kill_child();
 

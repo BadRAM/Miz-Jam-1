@@ -94,6 +94,7 @@ public class StringToSprites : MonoBehaviour
 
     public void updateSprites(string updatedMessage)
     {
+        Dictionary<char, Sprite> charSpriteDict = initiateDict();
         deleteChildren();
         updatedMessage = updatedMessage.ToUpper();
 
@@ -102,9 +103,9 @@ public class StringToSprites : MonoBehaviour
         {
             GameObject spriteObject = Instantiate(spritePrefab, transform);
             spriteObject.transform.localPosition = cursorPos;
-            if (characterSpriteDict.ContainsKey(character))
+            if (charSpriteDict.ContainsKey(character))
             {
-                  spriteObject.GetComponent<SpriteRenderer>().sprite = characterSpriteDict[character];
+                  spriteObject.GetComponent<SpriteRenderer>().sprite = charSpriteDict[character];
             }
             cursorPos += Vector3.right * charWidth;
         }

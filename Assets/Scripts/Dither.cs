@@ -215,7 +215,6 @@ public class Dither : MonoBehaviour
         lastposx = posx;
         lastposy = posy;
         lastmipLevel = mipLevel;
-                            Debug.Log(lastposy);
 //        foreach (Transform child in transform) {
 //            Destroy(child.gameObject);
 //        }
@@ -242,6 +241,16 @@ public class Dither : MonoBehaviour
         
     }
 
+    public void restart_dither()
+    {
+        zoomLevel = 0;
+        _midZoomY = 0;
+        _midZoomX = 0;
+        _closeZoomY = 0;
+        _closeZoomX = 0;
+        start_dither(currentImage.Texture, 0, 0, 3);
+        kill_child();
+    }
 
     void dither_iterate()
     {
