@@ -4391,7 +4391,9 @@ MonoBehaviour:
   message: {fileID: 0}
   boxAnim: {fileID: 4088967}
   titleText: {fileID: 545752653}
-  levels: []
+  levels:
+  - {fileID: 11400000, guid: 4b6cf0510212ac542a93129467ac7121, type: 2}
+  dither: {fileID: 2027766913}
 --- !u!4 &937994592
 Transform:
   m_ObjectHideFlags: 0
@@ -5697,7 +5699,19 @@ MonoBehaviour:
   _AS: {fileID: 0}
   Clicked:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 937994591}
+        m_TargetAssemblyTypeName: Game, Assembly-CSharp
+        m_MethodName: Submit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   Sprites:
   - {fileID: 1874218912}
   - {fileID: 829059369}
@@ -9193,7 +9207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f14516875ded9524ca8ab05e7efe1588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentImage: {fileID: 2800000, guid: 94da3dc7d29305942b72ac8377670f1d, type: 3}
+  currentImage: {fileID: 0}
   One_Ass: {fileID: 2800000, guid: e9178df2a2bf3824c878d34450bfe375, type: 3}
   width: 56
   height: 30

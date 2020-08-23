@@ -6,6 +6,7 @@ using UnityEngine;
 public class Level : ScriptableObject
 {
     public string Briefing;
+    public string Note;
     public int ClueLimit;
     public Image[] Images;
     public AudioClip MusicIntro;

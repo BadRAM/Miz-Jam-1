@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed7d37d5a87ee84587a9c3b0a02efb6, type: 3}
+  m_Name: HydrantLevel
+  m_EditorClassIdentifier: 
+  Briefing: 
+  Note: '- Fire Hydrants'
+  ClueLimit: 0
+  Images:
+  - {fileID: 11400000, guid: 8575dcde3295e534a88d428ae1dff70a, type: 2}
+  - {fileID: 11400000, guid: b8464f594913e0b46be1b967f06717bd, type: 2}
+  - {fileID: 11400000, guid: 653acd4dd3b653f49ae0dd44d9717fe0, type: 2}
+  - {fileID: 11400000, guid: 681d0086c556df649bacf90142905bcd, type: 2}
+  - {fileID: 11400000, guid: 6be4544886814014e97d5dd75d8e34ba, type: 2}
+  - {fileID: 11400000, guid: a6f56cba3eb563442aa0059656c52a83, type: 2}
+  MusicIntro: {fileID: 0}
+  MusicLoop: {fileID: 0}

@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Dither : MonoBehaviour
 {
-    [SerializeField] private Texture2D currentImage;
+    [SerializeField] public Image currentImage;
     [SerializeField] private Texture2D One_Ass;
     [SerializeField] private int width;
     [SerializeField] private int height;
@@ -77,7 +77,7 @@ public class Dither : MonoBehaviour
     {
         //Array.Sort(Tiles);
 
-        start_dither(currentImage, 0, 0, 2);
+        start_dither(currentImage.Texture, 0, 0, 3);
     }
 
     // Update is called once per frame
@@ -164,7 +164,7 @@ public class Dither : MonoBehaviour
 
         //Debug.Log( "posx: " + posx + " posy: " + posy);
         
-        start_dither(currentImage, posx, posy, ZoomToMip());
+        start_dither(currentImage.Texture, posx, posy, ZoomToMip());
         
         _lastSpritesParent.localScale = Vector3.one * 2;
         _lastSpritesParent.localPosition += Vector3.right * width * -pos.x + Vector3.up * height * (1f-pos.y) + Vector3.forward;
@@ -186,17 +186,17 @@ public class Dither : MonoBehaviour
         if(zoomLevel == 3)
         {
             zoomLevel =2;
-            start_dither(currentImage, _closeZoomX, _closeZoomY,ZoomToMip());           
+            start_dither(currentImage.Texture, _closeZoomX, _closeZoomY,ZoomToMip());           
         }
         else if (zoomLevel == 2)
         {
             zoomLevel = 1;
-            start_dither(currentImage, _midZoomX, _midZoomY, ZoomToMip());
+            start_dither(currentImage.Texture, _midZoomX, _midZoomY, ZoomToMip());
         }
         else
         {
             zoomLevel = 0;
-            start_dither(currentImage, 0, 0, ZoomToMip());
+            start_dither(currentImage.Texture, 0, 0, ZoomToMip());
         }
         
         Destroy(_lastSpritesParent.gameObject);
