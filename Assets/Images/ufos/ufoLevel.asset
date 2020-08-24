@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed7d37d5a87ee84587a9c3b0a02efb6, type: 3}
   m_Name: ufoLevel
   m_EditorClassIdentifier: 
-  Briefing: censor ufos
+  Briefing: Welcome back to the Foundation ~cognitohazard prevention program. ~Please
+    use your terminal to censor ~cognitohazards and submit the image ~when there
+    are no longer any hazards. ~Failure to do so can result in the ~death of your
+    coworkers  ~~Dr. Bright ~ ~ ~ ~ ~               Press enter to continue
   Note: Flying Saucers
   ClueLimit: 3
   Images:

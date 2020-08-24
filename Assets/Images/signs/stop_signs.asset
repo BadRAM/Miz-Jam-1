@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed7d37d5a87ee84587a9c3b0a02efb6, type: 3}
   m_Name: stop_signs
   m_EditorClassIdentifier: 
-  Briefing: censor stop signs
+  Briefing: Your performance is better than it has ~been previously. Your incompetence
+    has ~only resulted in the death of thirteen ~employees.  ~~Dr. Gears ~ ~ ~ ~
+    ~ ~ ~ ~               Press enter to continue
   Note: Stop Signs
   ClueLimit: 3
   Images:

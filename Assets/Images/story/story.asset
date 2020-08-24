@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed7d37d5a87ee84587a9c3b0a02efb6, type: 3}
   m_Name: story
   m_EditorClassIdentifier: 
-  Briefing: censor them before they find you
+  Briefing: Today is important. Your performance in ~the next session will determine
+    the ~future of funding for this project. ~However I have taken initiatives that
+    ~ensure you will not fail. ~Thank you for your service.  ~~Dr. Bright ~ ~ ~ ~
+    ~ ~               Press enter to continue
   Note: Them
   ClueLimit: 5
   Images:

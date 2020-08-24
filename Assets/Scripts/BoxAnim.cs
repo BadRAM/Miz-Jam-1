@@ -24,9 +24,12 @@ public class BoxAnim : MonoBehaviour
     [SerializeField] private float zLayer;
     public bool StartAnim = false;
     public bool StartReverseAnim = false;
+    private bool _stopreverse;
+    private Game _game;
     
     void Start()
     {
+        _game = FindObjectOfType<Game>();
         zLayer = this.transform.position.z;
         if(box != null)
         {
@@ -39,7 +42,6 @@ public class BoxAnim : MonoBehaviour
             box.right = 0;
             box.left = 0;
             box.zLayer = 20;
-            StartCoroutine(BoxAnimation(AnimationSpeed));
         }
     }
 
@@ -51,11 +53,13 @@ public class BoxAnim : MonoBehaviour
         if(StartAnim)
         {
             StartCoroutine(BoxAnimation(AnimationSpeed));
+            _stopreverse = true;
         }
 
         if(StartReverseAnim)
         {
-            StartCoroutine(BoxAnimationReverse(AnimationSpeed));
+            _stopreverse = false;
+            StartCoroutine(BoxAnimationReverse(AnimationSpeed/2));
         }
     }
 
@@ -65,10 +69,6 @@ public class BoxAnim : MonoBehaviour
         StartAnim = false;
         box.BoxIsUpdating = true;
         box.zLayer = zLayer;
-        foreach(StringToSprites text in Texts)
-        {
-            text._TextPlay = true;
-        }
         while(box.right != BoxRight)
         {
             yield return new WaitForSeconds(sec);
@@ -103,7 +103,9 @@ public class BoxAnim : MonoBehaviour
         {
             objects.SetActive(true);
         }
-        yield return new WaitForSeconds(0.75f);
+        enhanceButton.deleteChildren();
+        enhanceButton._TextPlay = true;
+        
         if(submit != null)
         {
             foreach(GameObject objects in submit)
@@ -111,7 +113,9 @@ public class BoxAnim : MonoBehaviour
                 objects.SetActive(true); 
             }
         }
-        yield return new WaitForSeconds(0.75f);
+        submitButton.deleteChildren();
+        submitButton._TextPlay = true;
+        
         if(Censor != null)
         {
             foreach(GameObject objects in Censor)
@@ -119,20 +123,27 @@ public class BoxAnim : MonoBehaviour
                 objects.SetActive(true); 
             }
         }
+        CensorButton.deleteChildren();
+        CensorButton._TextPlay = true;
+        
+        foreach(StringToSprites text in Texts)
+        {
+            text.deleteChildren();
+            text._TextPlay = true;
+        }
         StopCoroutine(BoxAnimation(AnimationSpeed));
     }
     public IEnumerator BoxAnimationReverse(float sec)
     {
+        if (_stopreverse)
+        {
+            StopCoroutine(BoxAnimationReverse(AnimationSpeed));
+            _stopreverse = false;
+        }
         StartReverseAnim = false;
         box.BoxIsUpdating = true;
-        foreach(StringToSprites text in Texts)
-        {
-            text._TextPlayReverse = true;
-        }
         if(Censor != null)
         {
-            StartCoroutine(CensorButton.SpritesAnimReverse());
-            yield return new WaitForSeconds(1f);
             foreach(GameObject objects in Censor)
             {
                 objects.SetActive(false);
@@ -140,8 +151,6 @@ public class BoxAnim : MonoBehaviour
         }
         if(submit != null)
         {
-            StartCoroutine(submitButton.SpritesAnimReverse());
-            yield return new WaitForSeconds(1f);
             foreach(GameObject objects in submit)
             {
                 objects.SetActive(false);
@@ -149,21 +158,18 @@ public class BoxAnim : MonoBehaviour
         }
         if(enhance != null)
         {
-            StartCoroutine(enhanceButton.SpritesAnimReverse());
-            yield return new WaitForSeconds(1f);
             foreach(GameObject objects in enhance)
             {
                 objects.gameObject.SetActive(false);
             }
         }
-        yield return new WaitForSeconds(0.75f);
         if(dither != null)
         {
             dither.SetActive(false);
         }
         while(box.top != BoxTop - (BoxTop - BoxBottom)/2)
         {
-            yield return new WaitForSeconds(sec * 2);
+            yield return new WaitForSeconds(sec);
             box.top--;
             box.bottom++;
             topBlackBox.bottom = box.top;
@@ -177,7 +183,7 @@ public class BoxAnim : MonoBehaviour
         
         while(box.right != 0)
         {
-            yield return new WaitForSeconds(sec);
+            yield return new WaitForSeconds(sec/2);
             box.right--;
             box.left++;
         }
@@ -186,6 +192,7 @@ public class BoxAnim : MonoBehaviour
         box.zLayer = zLayer;
         box.UpdateBox();
         box.BoxIsUpdating = false;
+        
         StopCoroutine(BoxAnimationReverse(AnimationSpeed));
     }
 }

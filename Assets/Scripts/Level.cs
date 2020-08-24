@@ -11,4 +11,5 @@ public class Level : ScriptableObject
     public Image[] Images;
     public AudioClip MusicIntro;
     public AudioClip MusicLoop;
+    public bool final;
 }

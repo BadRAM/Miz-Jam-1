@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed7d37d5a87ee84587a9c3b0a02efb6, type: 3}
+  m_Name: CreditsLevel
+  m_EditorClassIdentifier: 
+  Briefing: Final report ~ ~D 20384 successfully self terminated ~ ~SCP Foundation
+    image project is ~considered a success. ~ ~Proceeding to large scale testing
+    on ~SCP 096 ~ ~ ~ ~ ~               Press enter to continue
+  Note: 
+  ClueLimit: 0
+  Images: []
+  MusicIntro: {fileID: 0}
+  MusicLoop: {fileID: 8300000, guid: 816fe8fdcdca155468c88cfe78bca9c0, type: 3}

@@ -11,12 +11,14 @@ public class StringToSprites : MonoBehaviour
     [SerializeField] private List<CharSprite> spriteMap;
     [SerializeField] private GameObject spritePrefab;
     [SerializeField] private float charWidth = 1f;
+    [SerializeField] private float animationInterval = 0.1f;
     [SerializeField] private Boolean Test = false;
     private Dictionary<char, Sprite> characterSpriteDict;
     [SerializeField] private List<GameObject> sprites = new List<GameObject>();
     public bool _TextPlay;
     public bool _StartWithNoText = false;
     public bool _TextPlayReverse = false;
+
     //public Button _button;
 
     void Start()
@@ -43,7 +45,7 @@ public class StringToSprites : MonoBehaviour
 
         if(_TextPlayReverse == true)
         {
-            StartCoroutine(SpritesAnimReverse());
+            //StartCoroutine(SpritesAnimReverse());
         }
     }
 
@@ -58,6 +60,11 @@ public class StringToSprites : MonoBehaviour
         Vector3 cursorPos = new Vector3();
         foreach (char character in textToConvert)
         {
+            if (character == '~')
+            {
+                cursorPos = new Vector3(0, cursorPos.y - 1, cursorPos.z);
+                continue;
+            }
             GameObject spriteObject = Instantiate(spritePrefab, transform);
             spriteObject.transform.localPosition = cursorPos;
             if (charSpriteDict.ContainsKey(character))
@@ -107,7 +114,12 @@ public class StringToSprites : MonoBehaviour
         Vector3 cursorPos = new Vector3();
         foreach (char character in textToConvert)
         {
-            yield return new WaitForSeconds(0.1f);
+            if (character == '~')
+            {
+                cursorPos = new Vector3(0, cursorPos.y - 1, cursorPos.z);
+                continue;
+            }
+            yield return new WaitForSeconds(animationInterval);
             GameObject spriteObject = Instantiate(spritePrefab, transform);
             spriteObject.transform.localPosition = cursorPos;
             
@@ -131,7 +143,7 @@ public class StringToSprites : MonoBehaviour
         }
         foreach (Transform child in transform)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(animationInterval);
             Destroy(child.gameObject);
         }
         if(transform.childCount != 0)

@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed7d37d5a87ee84587a9c3b0a02efb6, type: 3}
   m_Name: HydrantLevel
   m_EditorClassIdentifier: 
-  Briefing: 
+  Briefing: Are you aware that this is the thirty ~fifth time you have been a part
+    of this ~program. Perhaps you should not be so ~trusting.  ~~o5 11 ~ ~ ~ ~ ~
+    ~ ~ ~               Press enter to continue
   Note: Fire Hydrants
   ClueLimit: 4
   Images:

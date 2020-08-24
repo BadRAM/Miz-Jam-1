@@ -14,6 +14,9 @@ public class Game : MonoBehaviour
     [SerializeField] private Transform gameScreen;
     [SerializeField] private MessageBox message; // the prefab of the message system which tells you if you failed or succeeded the last image.
     [SerializeField] private BoxAnim boxAnim;
+
+    [SerializeField] private StringToSprites briefing;
+    [SerializeField] private Box briefingBox;
     
     [SerializeField] private StringToSprites titleText;
     [SerializeField] private StringToSprites note;
@@ -27,6 +30,7 @@ public class Game : MonoBehaviour
     private int _clues;
     private MusicMan _musicMan;
     [SerializeField] private Dither dither;
+    private bool _isBriefing;
 
     private void Start()
     {
@@ -38,6 +42,24 @@ public class Game : MonoBehaviour
         _musicMan.UpdateLevel(menuMusicLevel);
     }
 
+    private void Update()
+    {
+        if (_isBriefing && Input.GetKeyDown(KeyCode.Return))
+        {
+            _isBriefing = false;
+            if (_currentLevel == levels.Length-1)
+            {
+                FinishGame();
+            }
+            LevelInit();
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            FinishLevel();
+        }
+    }
+
     public void BeginGame()
     {
         mainMenu.gameObject.SetActive(false);
@@ -46,11 +68,25 @@ public class Game : MonoBehaviour
 
         _currentLevel = 0;
 
-        LevelInit();
+        Briefing();
+    }
+
+    private void Briefing()
+    {
+        _isBriefing = true;
+        boxAnim.StartReverseAnim = true;
+        briefingBox.SetVisible(true);
+        briefing.deleteChildren();
+        briefing.TextToConvert = levels[_currentLevel].Briefing;
+        briefing._TextPlay = true;
+        briefing.transform.position = new Vector3(briefing.transform.position.x, briefing.transform.position.y, -6);
     }
 
     private void LevelInit()
     {
+        briefing.deleteChildren();
+        briefing.transform.position = new Vector3(briefing.transform.position.x, briefing.transform.position.y, 100);
+        briefingBox.SetVisible(false);
         boxAnim.StartAnim = true;
         note.deleteChildren();
         note.TextToConvert = levels[_currentLevel].Note;
@@ -127,6 +163,15 @@ public class Game : MonoBehaviour
     void NextImage()
     {
         _currentImage++;
+        if (_currentImage == levels[_currentLevel].Images.Length)
+        {
+            if (levels[_currentLevel].final)
+            {
+                FinishGame();
+                return;
+            }
+            _currentImage = 0;
+        }
         dither.currentImage = levels[_currentLevel].Images[_currentImage];
         dither.restart_dither();
         dither.censor.rectanglesToCensor.RemoveRange(0, dither.censor.rectanglesToCensor.Count);
@@ -134,15 +179,9 @@ public class Game : MonoBehaviour
 
     public void FinishLevel()
     {
-        if (_currentLevel == levels.Length-1)
-        {
-            FinishGame();
-            return;
-        }
-
         _currentLevel++;
         
-        LevelInit();
+        Briefing();
     }
 
     public void FinishGame()

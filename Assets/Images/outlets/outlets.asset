@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed7d37d5a87ee84587a9c3b0a02efb6, type: 3}
   m_Name: outlets
   m_EditorClassIdentifier: 
-  Briefing: censor power outlets
+  Briefing: Adequate job on your last session. As ~it is policy to use amnestics
+    in your ~line of work you may or may not ~remember previously being part of this
+    ~initiative. This is considered normal.  ~~Dr. Bright ~ ~ ~ ~ ~ ~ ~              
+    Press enter to continue
   Note: Power Outlets
   ClueLimit: 3
   Images:

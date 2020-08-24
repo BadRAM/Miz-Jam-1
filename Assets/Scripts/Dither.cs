@@ -271,7 +271,6 @@ public class Dither : MonoBehaviour
 
     public void restart_dither()
     {
-        Debug.Log("ured = " + ured + "ugreen = " + ugreen + " ublue = " + ublue);
         zoomLevel = 0;
         _midZoomY = 0;
         _midZoomX = 0;
