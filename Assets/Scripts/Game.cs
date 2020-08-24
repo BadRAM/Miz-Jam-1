@@ -54,7 +54,7 @@ public class Game : MonoBehaviour
             LevelInit();
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) && Application.isEditor)
         {
             FinishLevel();
         }
@@ -167,7 +167,7 @@ public class Game : MonoBehaviour
         {
             if (levels[_currentLevel].final)
             {
-                FinishGame();
+                FinishLevel();
                 return;
             }
             _currentImage = 0;

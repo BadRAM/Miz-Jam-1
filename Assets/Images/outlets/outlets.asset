@@ -25,5 +25,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e480a740a27f741448a861923ef23147, type: 2}
   - {fileID: 11400000, guid: 18c2b50d75193fb4d8a521596042f838, type: 2}
   - {fileID: 11400000, guid: 94be234800a43d14ba2944dc32721497, type: 2}
-  MusicIntro: {fileID: 8300000, guid: 356e48d1c61fc9645b8453b574d87fdf, type: 3}
+  MusicIntro: {fileID: 0}
   MusicLoop: {fileID: 8300000, guid: 356e48d1c61fc9645b8453b574d87fdf, type: 3}
+  final: 0

@@ -15,5 +15,5 @@ MonoBehaviour:
   Texture: {fileID: 2800000, guid: 4514dc800d3b10440b1fd4faaf0a8601, type: 3}
   Hazards:
   - {x: 372, y: 113}
-  - {x: 366, y: 198}
+  - {x: 366, y: 108}
   - {x: 364, y: 104}
